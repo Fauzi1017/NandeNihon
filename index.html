@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NandeNihon</title>
+    <link rel="stylesheet" href="asset/style.css">
+</head>
+<body>
+	<div class="hero__bg" aria-hidden="true"></div>
+    <!-- Header Navigation -->
+    <header class="header" id="mainHeader">
+        <nav class="nav">
+            <div class="nav-container">
+                <!-- Logo/Brand -->
+                <div class="nav-brand">
+                    <a href="#" class="brand-link" id="toTopBtn" title="Kembali ke atas">
+                        <img src="asset/img/logo.svg" alt="NandeNihon" style="width:100%;height:auto;" />
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Tentang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Kontak</a>
+                    </li>
+                </ul>
+                
+                <!-- Contact Button -->
+                <div class="nav-action">
+                    <button class="btn btn-primary btn-contact">Hubungi Kami</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <style>
+        .header.scrolled {
+            background-color: #ffffff;
+            transition: background-color 0.3s;
+        }
+    </style>
+    <script>
+        // Fill color on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to top on logo click
+        document.addEventListener('DOMContentLoaded', function() {
+            const toTopBtn = document.getElementById('toTopBtn');
+            toTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+			
+            <div class="hero-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                <!-- Left Section - Text and CTA -->
+                <div class="hero-content" style="flex:0%; min-width: 0;">
+                    <h1 class="hero-title">Belajar Bahasa Jepang</h1>
+                    <h2 class="hero-subtitle">Tidak Harus Sulit dan Menakutkan.</h2>
+                    <p class="hero-description">
+                        Dari pengalaman nyata belajar dari nol, kami hadirkan ruang belajar yang hangat, terstruktur, dan bisa kamu nikmati meskipun kamu belum tahu satu huruf pun.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary btn-hero-primary">Mulai Belajar</button>
+                        <button class="btn btn-outline-primary btn-hero-secondary">Lihat Kelas</button>
+                    </div>
+                </div>
+                
+                <!-- Right Section - Maskot Image -->
+                <div class="hero-illustration" style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center; height: 100%;">
+                    <img src="asset/img/maskot.svg" alt="Maskot NandeNihon" style="max-width: 400px; width: 100%; height: auto; display: block;" />
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: What You Get -->
+  	<div class="section-2">
+		<span class="apa-yang-kamu">Apa yang Kamu Dapatkan di Nande Nihon?</span>
+		<div class="content">
+			<div class="card-us">
+				<img class="loading-icon" alt="Belajar dari Nol" src="asset/img/icon/Loading.svg" />
+				<div class="belajar-dari-nol">Belajar dari Nol</div>
+				<div class="mulai-dari-huruf">
+					Mulai dari huruf Hiragana, Katakana, hingga tata bahasa dasar dan percakapan sehari-hari. Materi disusun terarah dan mudah dipahami.
+				</div>
+			</div>
+			<div class="card-us">
+				<img class="loading-icon" alt="Kelas Online Interaktif" src="asset/img/icon/Online Class.svg" />
+				<div class="belajar-dari-nol">Kelas Online Interaktif</div>
+				<div class="mulai-dari-huruf">
+					4x pertemuan Zoom. Setiap sesi terekam dan bisa dipelajari ulang. Cocok untuk pemula yang perlu fleksibilitas waktu.
+				</div>
+			</div>
+			<div class="card-us">
+				<img class="loading-icon" alt="E-book & Worksheet Eksklusif" src="asset/img/icon/Ebook.svg" />
+				<div class="belajar-dari-nol">E-book & Worksheet Eksklusif</div>
+				<div class="mulai-dari-huruf">
+					Desain menarik, dan bisa dicetak. Membantu kamu latihan mandiri dengan cara yang menyenangkan.
+				</div>
+			</div>
+			<div class="card-us">
+				<img class="loading-icon" alt="Pembelajaran Budaya Jepang" src="asset/img/icon/Sakura.svg" />
+				<div class="belajar-dari-nol">Pembelajaran Budaya Jepang</div>
+				<div class="mulai-dari-huruf">
+					Bukan cuma bahasanya, kamu juga belajar etika, kehidupan orang Jepang, dan cara memahami budaya mereka dari dalam.
+				</div>
+			</div>
+			<div class="card-us">
+				<img class="loading-icon" alt="Grup Komunitas Belajar" src="asset/img/icon/Community.svg" />
+				<div class="belajar-dari-nol">Grup Komunitas Belajar</div>
+				<div class="mulai-dari-huruf">
+					Kamu tidak belajar sendirian. Temukan teman seperjalanan yang saling menyemangati dalam komunitas kami.
+				</div>
+			</div>
+			<div class="card-us">
+				<img class="loading-icon" alt="Pengajar & Koordinator Aktif" src="asset/img/icon/Lecture.svg" />
+				<div class="belajar-dari-nol">Pengajar & Koordinator Aktif</div>
+				<div class="mulai-dari-huruf">
+					Kami bantu awasi perkembanganmu, jawab pertanyaan, dan selalu siap memberi arahan jika kamu bingung.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Section 3: Why We Exist -->
+
+    </main>
+</body>
+</html>
+
