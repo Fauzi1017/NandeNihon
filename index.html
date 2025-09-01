@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NandeNihon</title>
+    <title>Nande Nihon</title>
     <link rel="icon" type="image/png" href="asset/img/favicon.png">
     <link rel="stylesheet" href="asset/style.css">
-    
+
 </head>
+
 <body>
-	<div class="hero__bg" aria-hidden="true"></div>
-    
+    <div class="hero__bg" aria-hidden="true"></div>
+
     <!-- Header Navigation -->
     <header class="header" id="mainHeader">
         <nav class="nav">
@@ -21,7 +23,7 @@
                         <img src="asset/img/logo.svg" alt="NandeNihon" style="width:100%;height:auto;" />
                     </a>
                 </div>
-                
+
                 <!-- Navigation Links -->
                 <ul class="nav-menu">
                     <li class="nav-item">
@@ -40,7 +42,7 @@
                         <a href="#" class="nav-link">Kontak</a>
                     </li>
                 </ul>
-                
+
                 <!-- Contact Button -->
                 <div class="nav-action">
                     <button class="btn btn-primary btn-contact">Hubungi Kami</button>
@@ -56,7 +58,7 @@
     </style>
     <script>
         // Fill color on scroll
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const header = document.getElementById('mainHeader');
             if (window.scrollY > 10) {
                 header.classList.add('scrolled');
@@ -66,9 +68,9 @@
         });
 
         // Scroll to top on logo click
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const toTopBtn = document.getElementById('toTopBtn');
-            toTopBtn.addEventListener('click', function(e) {
+            toTopBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
@@ -79,104 +81,668 @@
     <main class="main-content">
         <!-- Hero Section -->
         <section class="hero">
-			
-            <div class="hero-container" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+
+            <div class="hero-container"
+                style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
                 <!-- Left Section - Text and CTA -->
                 <div class="hero-content" style="flex:0%; min-width: 0;">
                     <h1 class="hero-title">Belajar Bahasa Jepang</h1>
                     <h2 class="hero-subtitle">Tidak Harus Sulit dan Menakutkan.</h2>
                     <p class="hero-description">
-                        Dari pengalaman nyata belajar dari nol, kami hadirkan ruang belajar yang hangat, terstruktur, dan bisa kamu nikmati meskipun kamu belum tahu satu huruf pun.
+                        Dari pengalaman nyata belajar dari nol, kami hadirkan ruang belajar yang hangat, terstruktur,
+                        dan bisa kamu nikmati meskipun kamu belum tahu satu huruf pun.
                     </p>
                     <div class="hero-actions">
                         <button class="btn btn-primary btn-hero-primary">Mulai Belajar</button>
-                        <button class="btn btn-outline-primary btn-hero-secondary">Lihat Kelas</button>
+                        <button class="btn btn-secondary btn-hero-secondary">Lihat Kelas</button>
                     </div>
                 </div>
-                
+
                 <!-- Right Section - Maskot Image -->
-                <div class="hero-illustration" style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center; height: 100%;">
-                    <img src="asset/img/maskot.svg" alt="Maskot NandeNihon" style="max-width: 400px; width: 100%; height: auto; display: block;" />
+                <div class="hero-illustration"
+                    style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center; height: 100%;">
+                    <img src="asset/img/maskot.svg" alt="Maskot NandeNihon"
+                        style="max-width: 400px; width: 100%; height: auto; display: block;" />
                 </div>
             </div>
         </section>
 
         <!-- Section 2: What You Get -->
-  	<div class="section-2">
-		<span class="apa-yang-kamu">Apa yang Kamu Dapatkan di Nande Nihon?</span>
-		<div class="content">
-			<div class="card-us">
-				<img class="loading-icon" alt="Belajar dari Nol" src="asset/img/icon/Loading.svg" />
-				<div class="belajar-dari-nol">Belajar dari Nol</div>
-				<div class="mulai-dari-huruf">
-					Mulai dari huruf Hiragana, Katakana, hingga tata bahasa dasar dan percakapan sehari-hari. Materi disusun terarah dan mudah dipahami.
-				</div>
-			</div>
-			<div class="card-us">
-				<img class="loading-icon" alt="Kelas Online Interaktif" src="asset/img/icon/Online Class.svg" />
-				<div class="belajar-dari-nol">Kelas Online Interaktif</div>
-				<div class="mulai-dari-huruf">
-					4x pertemuan Zoom. Setiap sesi terekam dan bisa dipelajari ulang. Cocok untuk pemula yang perlu fleksibilitas waktu.
-				</div>
-			</div>
-			<div class="card-us">
-				<img class="loading-icon" alt="E-book & Worksheet Eksklusif" src="asset/img/icon/Ebook.svg" />
-				<div class="belajar-dari-nol">E-book & Worksheet Eksklusif</div>
-				<div class="mulai-dari-huruf">
-					Desain menarik, dan bisa dicetak. Membantu kamu latihan mandiri dengan cara yang menyenangkan.
-				</div>
-			</div>
-			<div class="card-us">
-				<img class="loading-icon" alt="Pembelajaran Budaya Jepang" src="asset/img/icon/Sakura.svg" />
-				<div class="belajar-dari-nol">Pembelajaran Budaya Jepang</div>
-				<div class="mulai-dari-huruf">
-					Bukan cuma bahasanya, kamu juga belajar etika, kehidupan orang Jepang, dan cara memahami budaya mereka dari dalam.
-				</div>
-			</div>
-			<div class="card-us">
-				<img class="loading-icon" alt="Grup Komunitas Belajar" src="asset/img/icon/Community.svg" />
-				<div class="belajar-dari-nol">Grup Komunitas Belajar</div>
-				<div class="mulai-dari-huruf">
-					Kamu tidak belajar sendirian. Temukan teman seperjalanan yang saling menyemangati dalam komunitas kami.
-				</div>
-			</div>
-			<div class="card-us">
-				<img class="loading-icon" alt="Pengajar & Koordinator Aktif" src="asset/img/icon/Lecture.svg" />
-				<div class="belajar-dari-nol">Pengajar & Koordinator Aktif</div>
-				<div class="mulai-dari-huruf">
-					Kami bantu awasi perkembanganmu, jawab pertanyaan, dan selalu siap memberi arahan jika kamu bingung.
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="section-2">
+            <div class="title" style="margin-bottom: 48px;">
+                <span class="section-title">Apa yang Kamu Dapatkan di Nande Nihon?</span>
+            </div>
+            <div class="content">
+                <div class="card-us">
+                    <img class="loading-icon" alt="Belajar dari Nol" src="asset/img/icon/Loading.svg" />
+                    <div class="belajar-dari-nol">Belajar dari Nol</div>
+                    <div class="mulai-dari-huruf">
+                        Mulai dari huruf Hiragana, Katakana, hingga tata bahasa dasar dan percakapan sehari-hari. Materi
+                        disusun terarah dan mudah dipahami.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="loading-icon" alt="Kelas Online Interaktif" src="asset/img/icon/Online Class.svg" />
+                    <div class="belajar-dari-nol">Kelas Online Interaktif</div>
+                    <div class="mulai-dari-huruf">
+                        4x pertemuan Zoom. Setiap sesi terekam dan bisa dipelajari ulang. Cocok untuk pemula yang perlu
+                        fleksibilitas waktu.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="loading-icon" alt="E-book & Worksheet Eksklusif" src="asset/img/icon/Ebook.svg" />
+                    <div class="belajar-dari-nol">E-book & Worksheet Eksklusif</div>
+                    <div class="mulai-dari-huruf">
+                        Desain menarik, dan bisa dicetak. Membantu kamu latihan mandiri dengan cara yang menyenangkan.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="loading-icon" alt="Pembelajaran Budaya Jepang" src="asset/img/icon/Sakura.svg" />
+                    <div class="belajar-dari-nol">Pembelajaran Budaya Jepang</div>
+                    <div class="mulai-dari-huruf">
+                        Bukan cuma bahasanya, kamu juga belajar etika, kehidupan orang Jepang, dan cara memahami budaya
+                        mereka dari dalam.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="loading-icon" alt="Grup Komunitas Belajar" src="asset/img/icon/Community.svg" />
+                    <div class="belajar-dari-nol">Grup Komunitas Belajar</div>
+                    <div class="mulai-dari-huruf">
+                        Kamu tidak belajar sendirian. Temukan teman seperjalanan yang saling menyemangati dalam
+                        komunitas kami.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="loading-icon" alt="Pengajar & Koordinator Aktif" src="asset/img/icon/Lecture.svg" />
+                    <div class="belajar-dari-nol">Pengajar & Koordinator Aktif</div>
+                    <div class="mulai-dari-huruf">
+                        Kami bantu awasi perkembanganmu, jawab pertanyaan, dan selalu siap memberi arahan jika kamu
+                        bingung.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-	<!-- Section 3: Why We Exist -->
-          <div class="section-3">
+        <!-- Section 3: Why We Exist -->
+        <div class="section-3">
             <div class="section-3__bg" aria-hidden="true"></div>
-                <div class="title">
-                      <b class="kenapa-kami-ada">Kenapa kami ada?</b>
-                      <div class="dibuat-oleh-mereka">Dibuat oleh Mereka yang Pernah Ada di Posisi Kamu</div>
+            <div class="title">
+                <b class="section-title">Kenapa kami ada?</b>
+                <div class="dibuat-oleh-mereka">Dibuat oleh Mereka yang Pernah Ada di Posisi Kamu</div>
+            </div>
+            <div class="content">
+                <div class="kami-bukan-lembaga-container">
+                    <p style="color: var(--neutral-90);">
+                        Kami bukan lembaga bahasa besar. Kami hanyalah orang-orang yang dulu juga bingung saat pertama
+                        kali belajar bahasa Jepang. Dari duduk sendiri sambil menyalin hiragana, sampai akhirnya berani
+                        berbicara langsung dengan orang Jepang semua kami jalani dari bawah.
+                    </p>
+                    <b class="nande-nihon" style="color: var(--primary-base);">Nande Nihon</b>
+                    <span style="color: var(--neutral-90);"> adalah bentuk nyata dari pengalaman itu Belajar dari dasar,
+                        langkah demi langkah Dibimbing dengan sabar Dalam suasana yang hangat dan menyenangkan Kami
+                        ingin kamu tidak merasa sendirian. Kami ingin kamu merasa didukung. Dan kami percaya semua orang
+                        bisa belajar bahasa Jepang.</span>
+
                 </div>
-                <div class="content">
-                      <div class="kami-bukan-lembaga-container">
-                            <p style="color: var(--neutral-90);">
-                                Kami bukan lembaga bahasa besar. Kami hanyalah orang-orang yang dulu juga bingung saat pertama kali belajar bahasa Jepang. Dari duduk sendiri sambil menyalin hiragana, sampai akhirnya berani berbicara langsung dengan orang Jepang semua kami jalani dari bawah.
+                <div class="image-fill">
+                    <img class="image-fill-inner" alt="" src="/asset/img/img-sec3.png"
+                        style="width: auto; height: 420px; ;">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Kelas Belajar -->
+        <div class="section-4">
+            <div class="title">
+                <b class="section-title" style="color: var(--neutral-90);">Belajar Bahasa Jepang Mulai dari Nol Gratis
+                    & Terstruktur!</b>
+                <p class="dibuat-oleh-mereka" style="margin-bottom: -24px; font-size: 16px; color: var(--neutral-90);">
+                    Mulai dari Hiragana, Katakana, hingga percakapan sehari-hari!</p>
+                <p class="dibuat-oleh-mereka" style="margin-bottom: -24px; font-size: 16px; color: var(--neutral-90);">
+                    Dapatkan materi dasar secara gratis dan lanjutkan ke kelas berbayar untuk level lanjutan! Belajar
+                    lebih mudah, terarah, dan fleksibel.</p>
+            </div>
+
+            <div class="content--sec4">
+                <div class="class-card"
+                    style="box-shadow: 0px 0px 20px 2px rgba(37, 99, 235, 0.6); border: 2px solid var(--primary-base);">
+                    <div class="free-stampt-icon" aria-hidden="true"></div>
+                    <div class="title-card">
+                        <div class="hiragana-katakana">Kelas Gratis</div>
+                    </div>
+                    <div class="untuk-kamu-yang-container">
+                        <p>Untuk kamu yang baru mulai belajar bahasa Jepang dari nol.</p>
+                        <p>Termasuk: Hiragana, Katakana, Kosakata Dasar, Salam Sehari-hari.</p>
+                    </div>
+                    <div class="class-card-actions">
+                        <button class="btn btn-primary btn-class-card-secondary">Mulai Belajar Sekarang
+                            (GRATIS)</button>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="title-card">
+                        <div class="hiragana-katakana">Kelas Berbayar (Lanjutan):</div>
+                    </div>
+                    <div class="untuk-kamu-yang-container">
+                        <p>Untuk kamu yang ingin melanjutkan ke level berikutnya.</p>
+                        <p>Termasuk: Minna no Nihongo Bab 1–25, Grammar, Latihan Soal, & Sertifikat.</p>
+                    </div>
+                    <div class="class-card-actions">
+                        <button class="btn btn-primary btn-class-card-secondary">Buka Akses</button>
+                        <button class="btn btn-secondary btn-class-card-primary">Detail Kelas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section News -->
+        <div class="section-news">
+            <div class="publikasi-parent">
+                <b class="publikasi">Publikasi</b>
+                <div class="tertiary">
+                    <b class="learn-more">Lihat Semua</b>
+                </div>
+            </div>
+            <div class="terbaru">
+                <b class="section-news-terbaru">Terbaru</b>
+                <div class="news">
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="terbaru">
+                <b class="section-news-terbaru">Terpopuler</b>
+                <div class="news">
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Testimoni -->
+        <div class="section-4">
+            <div class="title">
+                <b class="section-title">Mereka yang telah mulai bersama Kami</b>
+            </div>
+            <div class="content-testimonial">
+                <div class="testimoni">
+                    <div class="testimonial">
+                        <div class="text-testimonial">selama aku belajar di nande nihon menurut aku, belajar di nande
+                            nihon sangat menyenangkan, cara penyampaian sensei enak didengar dan mudah dipahami bagi aku
+                            yang pemula, materi jelas langsung dapet feel nya l. Terima kasih sensei dan nande nihon
+                            terus bergerak untuk berbuat kebaikan, bermanfaat banget kelas gratisnya</div>
+                    </div>
+                    <div class="box-name">
+                        <div class="name-user">Ajis</div>
+                        <div class="tahun">25 tahun</div>
+                        <img class="image-testimonial" alt="" src="/asset/img/azis.jpeg">
+
+                    </div>
+                </div>
+                <div class="testimoni">
+                    <div class="testimonial">
+                        <div class="text-testimonial">"Selama pembejalan seru sih, mudah di mengerti dan di pahami, tpi
+                            mines nya karena jarang ada kelasny jadi suka lupa² apalagi kalo g belajar mandiri sama
+                            sekali. Terus untuk mentorny All Out banget, sabar ny luar biasa ya, keren pokoknya".
+                            Saran nya "mungkin pertemuan nya bisa lebih banyak lagi hehe </div>
+
+                    </div>
+                    <div class="box-name">
+                        <div class="name-user">Deden</div>
+                        <div class="tahun">24 tahun</div>
+                        <img class="image-testimonial" alt="" src="/asset/img/deden.jpeg">
+
+                    </div>
+                </div>
+                <div class="testimoni">
+                    <div class="testimonial">
+                        <div class="text-testimonial">"Selama pembejalan seru sih, mudah di mengerti dan di pahami, tpi
+                            mines nya karena jarang ada kelasny jadi suka lupa² apalagi kalo g belajar mandiri sama
+                            sekali. Terus untuk mentorny All Out banget, sabar ny luar biasa ya, keren pokoknya".
+                            Saran nya "mungkin pertemuan nya bisa lebih banyak lagi hehe </div>
+
+                    </div>
+                    <div class="box-name">
+                        <div class="name-user">Deden</div>
+                        <div class="tahun">24 tahun</div>
+                        <img class="image-testimonial" alt="" src="/asset/img/deden.jpeg">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Team -->
+        <div class="section-10">
+            <div class="title">
+                <b class="section-title">Temui Tim Kami</b>
+            </div>
+            <div class="our-team-marquee-container">
+                <div class="our-team-marquee">
+                    <!-- Repeat the cards twice for seamless infinite effect -->
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/icon/sansan.jpg">
+                        <div class="caption-team">
+                            <div class="name-team">Sansan</div>
+                            <div class="position-team">Pengajar</div>
+                            <div class="moto">
+                                <p class="moto">Belajar bahasa Jepang itu kayak ramen kadang rumit, </p>
+                                <p class="moto">tapi nagih!</p>
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Rima.png">
+                        <div class="caption-team">
+                            <div class="name-team">Rima</div>
+                            <div class="position-team">Media & Komunikasi</div>
+                            <div class="moto">
+                                <p class="moto">Ilmu tenang itu mahal, jadiin itu sebagai senjata </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Dina.png">
+                        <div class="caption-team">
+                            <div class="name-team">Dina</div>
+                            <div class="position-team">Media & Komunikasi</div>
+                            <div class="moto">
+                                <p class="moto">Meski tiap baca nihongo otak suka loading, tapi hati tetap semangat 💪
                                 </p>
-                                <b class="nande-nihon" style="color: var(--primary-base);">Nande Nihon</b>
-                                <span style="color: var(--neutral-90);"> adalah bentuk nyata dari pengalaman itu Belajar dari dasar, langkah demi langkah Dibimbing dengan sabar Dalam suasana yang hangat dan menyenangkan Kami ingin kamu tidak merasa sendirian. Kami ingin kamu merasa didukung. Dan kami percaya semua orang bisa belajar bahasa Jepang.</span>
-                            
-                      </div>
-                      <div class="image-fill">
-                            <img class="image-fill-inner" alt="" src="/asset/img/img-sec3.png" style="width: auto; height: 420px; ;">
-                            
-                      </div>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Izumi.png">
+                        <div class="caption-team">
+                            <div class="name-team">Izumi</div>
+                            <div class="position-team">Pengajar</div>
+                            <div class="moto">
+                                <p class="moto">Apabila kesulitan menimpamu, tunjukkanlah kegagahanmu</p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Nailah.png">
+                        <div class="caption-team">
+                            <div class="name-team">Nailah</div>
+                            <div class="position-team">Data</div>
+                            <div class="moto">
+                                <p class="moto">Sabar itu berat karena hadiahnya kebahagiaan. Kalau gampang, hadiahnya
+                                    kipas angin
+                                </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Bela.png">
+                        <div class="caption-team">
+                            <div class="name-team">Bella</div>
+                            <div class="position-team">Admin & Data</div>
+                            <div class="moto">
+                                <p class="moto">Selesai lebih baik dari sempurna </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Ara.png">
+                        <div class="caption-team">
+                            <div class="name-team">Ara</div>
+                            <div class="position-team">Kordinator Pengajar</div>
+                            <div class="moto">
+                                <p class="moto">santai tapi tetep pada jalurnya</p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Laila.png">
+                        <div class="caption-team">
+                            <div class="name-team">Laila</div>
+                            <div class="position-team">Jurnalis</div>
+                            <div class="moto">
+                                <p class="moto">Fake it till you make it </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/icon/sansan.jpg">
+                        <div class="caption-team">
+                            <div class="name-team">Sansan</div>
+                            <div class="position-team">Pengajar</div>
+                            <div class="moto">
+                                <p class="moto">Belajar bahasa Jepang itu kayak ramen kadang rumit, </p>
+                                <p class="moto">tapi nagih!</p>
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Rima.png">
+                        <div class="caption-team">
+                            <div class="name-team">Rima</div>
+                            <div class="position-team">Media & Komunikasi</div>
+                            <div class="moto">
+                                <p class="moto">Ilmu tenang itu mahal, jadiin itu sebagai senjata </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Dina.png">
+                        <div class="caption-team">
+                            <div class="name-team">Dina</div>
+                            <div class="position-team">Media & Komunikasi</div>
+                            <div class="moto">
+                                <p class="moto">Meski tiap baca nihongo otak suka loading, tapi hati tetap semangat 💪
+                                </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Izumi.png">
+                        <div class="caption-team">
+                            <div class="name-team">Izumi</div>
+                            <div class="position-team">Pengajar</div>
+                            <div class="moto">
+                                <p class="moto">Apabila kesulitan menimpamu, tunjukkanlah kegagahanmu</p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Nailah.png">
+                        <div class="caption-team">
+                            <div class="name-team">Nailah</div>
+                            <div class="position-team">Data</div>
+                            <div class="moto">
+                                <p class="moto">Sabar itu berat karena hadiahnya kebahagiaan. Kalau gampang, hadiahnya
+                                    kipas angin
+                                </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Bela.png">
+                        <div class="caption-team">
+                            <div class="name-team">Bella</div>
+                            <div class="position-team">Admin & Data</div>
+                            <div class="moto">
+                                <p class="moto">Selesai lebih baik dari sempurna </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Ara.png">
+                        <div class="caption-team">
+                            <div class="name-team">Ara</div>
+                            <div class="position-team">Kordinator Pengajar</div>
+                            <div class="moto">
+                                <p class="moto">santai tapi tetep pada jalurnya</p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team">
+                        <img class="image-team" alt="" src="/asset/img/team/Laila.png">
+                        <div class="caption-team">
+                            <div class="name-team">Laila</div>
+                            <div class="position-team">Jurnalis</div>
+                            <div class="moto">
+                                <p class="moto">Fake it till you make it </p>
+
+                            </div>
+                            <div class="social-media">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/mail.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/Social Media.svg">
+                                <img class="social-media-icon" alt="" src="/asset/img/icon/X.svg">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-          </div>
+            </div>
 
+        </div>
+        </div>
 
-          
-  
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Jepang Mungkin jauh, Tapi mimpimu ngga harus</h2>
+                    <p class="cta-description">Di Nande Nihon, kamu nggak belajar sendirian. Kami percaya setiap orang berhak belajar dengan cara yang bikin tenang dan percaya diri. Kamu sudah sampai di halaman ini artinya kamu siap memulai. Sekarang waktunya kamu percaya, bahwa kamu bisa.</p>
+                </div>
+                
+                <div class="cta-buttons">
+                    <button class="btn btn-primary btn-class-card-primary">Gabung Sekarang</button>
+                    <button class="btn btn-secondary btn-class-card-secondary">Konsultasi Gratis</button>
+                </div>
+            </div>
+        </section>
+
     </main>
-</body>
-</html>
 
+    <!-- Footer Section -->
+    <footer class="footer">
+        <!-- Top Section - Light Blue Background -->
+        <div class="footer-top">
+            <div class="footer-container">
+                <!-- Left Column -->
+                <div class="footer-left">
+                    <div class="footer-brand">
+                        <img alt="Nande Nihon Logo" src="asset/img/logo.svg">
+                        
+                    </div>
+                    <p class="footer-tagline">Temukan Dunia Jepang Bersama Kami</p>
+                    <nav class="footer-nav">
+                        <a href="#" class="footer-nav-link">Home</a>
+                        <a href="#" class="footer-nav-link">Tentang</a>
+                        <a href="#" class="footer-nav-link">Kelas</a>
+                        <a href="#" class="footer-nav-link">Artikel</a>
+                        <a href="#" class="footer-nav-link">Kontak</a>
+                    </nav>
+                </div>
+
+                <!-- Right Column -->
+                <div class="footer-right">
+                    <h4 class="footer-contact-title">Kontak Kami</h4>
+                    <div class="footer-contact-info">
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="Email" src="asset/img/icon/mail.svg">
+                            <span class="contact-text">Nandenihon6@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="WhatsApp" src="asset/img/icon/wa.svg">
+                            <span class="contact-text">+62 812-9923-6462</span>
+                        </div>
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="Instagram" src="asset/img/icon/Social Media.svg">
+                            <span class="contact-text">@nandenihon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section - Dark Blue Background -->
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p class="footer-copyright">© 2025 Nande Nihon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
