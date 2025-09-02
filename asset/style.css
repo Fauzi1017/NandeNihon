@@ -300,7 +300,7 @@ body {
 }
 
 .bg-secondary-30 {
-  background-color: var(--secondary-30);
+  background-color: var(--secondary-40);
 }
 
 .bg-secondary-20 {
@@ -2485,10 +2485,15 @@ body {
 }
 
 /* Responsive Design for Footer */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
+  .footer-top {
+    padding: 40px 0;
+  }
+  
   .footer-container {
     flex-direction: column;
     gap: 40px;
+    padding: 0 24px;
   }
   
   .footer-left,
@@ -2496,29 +2501,19 @@ body {
     max-width: 100%;
   }
   
-  .footer-nav {
-    justify-content: flex-start;
-  }
-}
-
-@media (max-width: 768px) {
-  .footer-top {
-    padding: 40px 0;
-  }
-  
-  .footer-container {
-    padding: 0 24px;
-  }
-  
-  .footer-brand-name {
-    font-size: 20px;
+  .footer-brand {
+    justify-content: center;
+    margin-bottom: 20px;
   }
   
   .footer-tagline {
+    text-align: center;
     font-size: 16px;
+    margin-bottom: 24px;
   }
   
   .footer-nav {
+    justify-content: center;
     gap: 24px;
   }
   
@@ -2526,48 +2521,53 @@ body {
     font-size: 14px;
   }
   
+  .footer-right {
+    text-align: center;
+  }
+  
   .footer-contact-title {
     font-size: 18px;
+    margin-bottom: 20px;
   }
   
   .contact-text {
     font-size: 14px;
   }
+  
+  .footer-bottom .footer-container {
+    padding: 0 24px;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 360px) {
   .footer-top {
     padding: 32px 0;
   }
   
   .footer-container {
     padding: 0 16px;
+    gap: 32px;
   }
   
   .footer-brand {
     gap: 12px;
+    margin-bottom: 16px;
   }
   
-  .footer-logo {
+  .footer-brand img {
     width: 40px;
     height: 40px;
   }
   
-  .footer-brand-name {
-    font-size: 18px;
-  }
-  
-  .footer-brand-japanese {
-    font-size: 12px;
-  }
-  
   .footer-tagline {
     font-size: 14px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   
   .footer-nav {
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .footer-nav-link {
@@ -2576,6 +2576,20 @@ body {
   
   .footer-contact-title {
     font-size: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .footer-contact-info {
+    gap: 12px;
+  }
+  
+  .contact-item {
+    gap: 8px;
+  }
+  
+  .contact-icon {
+    width: 18px;
+    height: 18px;
   }
   
   .contact-text {
@@ -2584,6 +2598,10 @@ body {
   
   .footer-bottom {
     padding: 16px 0;
+  }
+  
+  .footer-bottom .footer-container {
+    padding: 0 16px;
   }
   
   .footer-copyright {

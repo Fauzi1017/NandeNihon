@@ -30,16 +30,16 @@
                         <a href="#" class="nav-link active">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Tentang</a>
+                        <a href="#Tentang" class="nav-link">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Kelas</a>
+                        <a href="#kelas" class="nav-link">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Artikel</a>
+                        <a href="https://nandenihon.com/category/artikel/" target="_blank" class="nav-link">Artikel</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Kontak</a>
+                        <a href="#kontak" class="nav-link">Kontak</a>
                     </li>
                 </ul>
 
@@ -101,14 +101,21 @@
                 <!-- Right Section - Maskot Image -->
                 <div class="hero-illustration"
                     style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center; height: 100%;">
-                    <img src="asset/img/maskot.svg" alt="Maskot NandeNihon"
+                    <img class="maskot-img" src="asset/img/maskot.svg" alt="Maskot NandeNihon"
                         style="max-width: 400px; width: 100%; height: auto; display: block;" />
                 </div>
+                <style>
+                    @media (max-width: 767px) {
+                        .maskot-img {
+                            display: none !important;
+                        }
+                    }
+                </style>
             </div>
         </section>
 
         <!-- Section 2: What You Get -->
-        <div class="section-2">
+        <div id="you-get" class="section-2">
             <div class="title" style="margin-bottom: 48px;">
                 <span class="section-title">Apa yang Kamu Dapatkan di Nande Nihon?</span>
             </div>
@@ -164,7 +171,7 @@
         </div>
 
         <!-- Section 3: Why We Exist -->
-        <div class="section-3">
+        <div id="Tentang" class="section-3">
             <div class="section-3__bg" aria-hidden="true"></div>
             <div class="title">
                 <b class="section-title">Kenapa kami ada?</b>
@@ -193,7 +200,7 @@
         </div>
 
         <!-- Section 9: Kelas Belajar -->
-        <div class="section-4">
+        <div id="kelas" class="section-4">
             <div class="title">
                 <b class="section-title" style="color: var(--neutral-90);">Belajar Bahasa Jepang Mulai dari Nol Gratis
                     & Terstruktur!</b>
@@ -237,7 +244,7 @@
         </div>
 
         <!-- Section News -->
-        <div class="section-news">
+        <div id="artikel" class="section-news">
             <div class="publikasi-parent">
                 <b class="publikasi">Publikasi</b>
                 <div class="tertiary">
@@ -694,7 +701,7 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="footer">
+    <footer id="kontak" class="footer">
         <!-- Top Section - Light Blue Background -->
         <div class="footer-top">
             <div class="footer-container">
