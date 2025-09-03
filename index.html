@@ -20,32 +20,121 @@
                 <!-- Logo/Brand -->
                 <div class="nav-brand">
                     <a href="#" class="brand-link" id="toTopBtn" title="Kembali ke atas">
-                        <img src="asset/img/logo.svg" alt="NandeNihon" style="width:100%;height:auto;" />
+                        <img src="asset/img/logo.svg" alt="NandeNihon" class="brand-logo" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="mainNavMenu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link active">Home</a>
+                        <a href="#" class="nav-link active" data-nav="home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#Tentang" class="nav-link">Tentang</a>
+                        <a href="#Tentang" class="nav-link" data-nav="tentang">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#kelas" class="nav-link">Kelas</a>
+                        <a href="#kelas" class="nav-link" data-nav="kelas">Kelas</a>
                     </li>
                     <li class="nav-item">
                         <a href="https://nandenihon.com/category/artikel/" target="_blank" class="nav-link">Artikel</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#kontak" class="nav-link">Kontak</a>
+                        <a href="#kontak" class="nav-link" data-nav="kontak">Kontak</a>
                     </li>
                 </ul>
 
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <script>
+                    // Make nav-link active while menu clicked/selected
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const navMenu = document.getElementById('mainNavMenu');
+                        const navLinks = navMenu.querySelectorAll('.nav-link');
+
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function (e) {
+                                // For external links, don't change active state
+                                if (link.target === '_blank' || link.href.startsWith('http')) {
+                                    return;
+                                }
+                                navLinks.forEach(l => l.classList.remove('active'));
+                                this.classList.add('active');
+                            });
+                        });
+
+                        // Optional: Set active based on scroll position (for in-page anchors)
+                        window.addEventListener('scroll', function () {
+                            const sections = [
+                                { id: 'Tentang', nav: 'tentang' },
+                                { id: 'kelas', nav: 'kelas' },
+                                { id: 'kontak', nav: 'kontak' }
+                            ];
+                            let found = false;
+                            for (let i = 0; i < sections.length; i++) {
+                                const section = document.getElementById(sections[i].id);
+                                if (section) {
+                                    const rect = section.getBoundingClientRect();
+                                    if (rect.top <= 80 && rect.bottom > 80) {
+                                        navLinks.forEach(l => l.classList.remove('active'));
+                                        const activeLink = navMenu.querySelector('.nav-link[data-nav="' + sections[i].nav + '"]');
+                                        if (activeLink) activeLink.classList.add('active');
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            // If no section found, set Home as active
+                            if (!found) {
+                                navLinks.forEach(l => l.classList.remove('active'));
+                                const homeLink = navMenu.querySelector('.nav-link[data-nav="home"]');
+                                if (homeLink) homeLink.classList.add('active');
+                            }
+                        });
+                    });
+                </script>
+
+                <!-- Mobile Menu Toggle Script -->
+                <script>
+                    // Mobile menu toggle functionality
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                        const navMenu = document.getElementById('mainNavMenu');
+                        const header = document.getElementById('mainHeader');
+
+                        mobileMenuBtn.addEventListener('click', function () {
+                            navMenu.classList.toggle('mobile-menu-open');
+                            mobileMenuBtn.classList.toggle('mobile-menu-active');
+                            header.classList.toggle('mobile-menu-open');
+                        });
+
+                        // Close mobile menu when clicking on a link
+                        const navLinks = navMenu.querySelectorAll('.nav-link');
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function () {
+                                navMenu.classList.remove('mobile-menu-open');
+                                mobileMenuBtn.classList.remove('mobile-menu-active');
+                                header.classList.remove('mobile-menu-open');
+                            });
+                        });
+
+                        // Close mobile menu when clicking outside
+                        document.addEventListener('click', function (e) {
+                            if (!header.contains(e.target)) {
+                                navMenu.classList.remove('mobile-menu-open');
+                                mobileMenuBtn.classList.remove('mobile-menu-active');
+                                header.classList.remove('mobile-menu-open');
+                            }
+                        });
+                    });
+                </script>
+
                 <!-- Contact Button -->
                 <div class="nav-action">
-                    <button class="btn btn-primary btn-contact">Hubungi Kami</button>
+                    <button class="btn btn-primary">Hubungi Kami</button>
                 </div>
             </div>
         </nav>
@@ -80,39 +169,34 @@
     <!-- Main Content -->
     <main class="main-content">
         <!-- Hero Section -->
-        <section class="hero">
-
-            <div class="hero-container"
-                style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        
+            <section class="hero-container">
                 <!-- Left Section - Text and CTA -->
-                <div class="hero-content" style="flex:0%; min-width: 0;">
-                    <h1 class="hero-title">Belajar Bahasa Jepang</h1>
-                    <h2 class="hero-subtitle">Tidak Harus Sulit dan Menakutkan.</h2>
+                <div class="hero-content">
+                    <div class="hero-title">Belajar Bahasa Jepang</div>
+                    <div class="hero-subtitle">Tidak Harus Sulit dan Menakutkan.</div>
                     <p class="hero-description">
                         Dari pengalaman nyata belajar dari nol, kami hadirkan ruang belajar yang hangat, terstruktur,
                         dan bisa kamu nikmati meskipun kamu belum tahu satu huruf pun.
                     </p>
                     <div class="hero-actions">
-                        <button class="btn btn-primary btn-hero-primary">Mulai Belajar</button>
-                        <button class="btn btn-secondary btn-hero-secondary">Lihat Kelas</button>
+                        <button class="btn btn-primary">Mulai Belajar</button>
+                        <button class="btn btn-secondary">Lihat Kelas</button>
                     </div>
                 </div>
 
                 <!-- Right Section - Maskot Image -->
-                <div class="hero-illustration"
-                    style="flex: 0 0 auto; display: flex; justify-content: flex-end; align-items: center; height: 100%;">
-                    <img class="maskot-img" src="asset/img/maskot.svg" alt="Maskot NandeNihon"
-                        style="max-width: 400px; width: 100%; height: auto; display: block;" />
+                <div class="hero-illustration">
+                    <img class="maskot-img" src="asset/img/maskot.svg" alt="Maskot NandeNihon" />
                 </div>
                 <style>
-                    @media (max-width: 767px) {
+                    @media (max-width: 1080px) {
                         .maskot-img {
                             display: none !important;
                         }
                     }
                 </style>
-            </div>
-        </section>
+            </section>
 
         <!-- Section 2: What You Get -->
         <div id="you-get" class="section-2">
@@ -121,48 +205,48 @@
             </div>
             <div class="content">
                 <div class="card-us">
-                    <img class="loading-icon" alt="Belajar dari Nol" src="asset/img/icon/Loading.svg" />
-                    <div class="belajar-dari-nol">Belajar dari Nol</div>
-                    <div class="mulai-dari-huruf">
+                    <img class="icon" alt="Belajar dari Nol" src="asset/img/icon/Loading.svg" />
+                    <div class="title-card">Belajar dari Nol</div>
+                    <div class="title-content">
                         Mulai dari huruf Hiragana, Katakana, hingga tata bahasa dasar dan percakapan sehari-hari. Materi
                         disusun terarah dan mudah dipahami.
                     </div>
                 </div>
                 <div class="card-us">
-                    <img class="loading-icon" alt="Kelas Online Interaktif" src="asset/img/icon/Online Class.svg" />
-                    <div class="belajar-dari-nol">Kelas Online Interaktif</div>
-                    <div class="mulai-dari-huruf">
+                    <img class="icon" alt="Kelas Online Interaktif" src="asset/img/icon/Online Class.svg" />
+                    <div class="title-card">Kelas Online Interaktif</div>
+                    <div class="title-content">
                         4x pertemuan Zoom. Setiap sesi terekam dan bisa dipelajari ulang. Cocok untuk pemula yang perlu
                         fleksibilitas waktu.
                     </div>
                 </div>
                 <div class="card-us">
-                    <img class="loading-icon" alt="E-book & Worksheet Eksklusif" src="asset/img/icon/Ebook.svg" />
-                    <div class="belajar-dari-nol">E-book & Worksheet Eksklusif</div>
-                    <div class="mulai-dari-huruf">
+                    <img class="icon" alt="E-book & Worksheet Eksklusif" src="asset/img/icon/Ebook.svg" />
+                    <div class="title-card">E-book & Worksheet Eksklusif</div>
+                    <div class="title-content">
                         Desain menarik, dan bisa dicetak. Membantu kamu latihan mandiri dengan cara yang menyenangkan.
                     </div>
                 </div>
                 <div class="card-us">
-                    <img class="loading-icon" alt="Pembelajaran Budaya Jepang" src="asset/img/icon/Sakura.svg" />
-                    <div class="belajar-dari-nol">Pembelajaran Budaya Jepang</div>
-                    <div class="mulai-dari-huruf">
+                    <img class="icon" alt="Pembelajaran Budaya Jepang" src="asset/img/icon/Sakura.svg" />
+                    <div class="title-card">Pembelajaran Budaya Jepang</div>
+                    <div class="title-content">
                         Bukan cuma bahasanya, kamu juga belajar etika, kehidupan orang Jepang, dan cara memahami budaya
                         mereka dari dalam.
                     </div>
                 </div>
                 <div class="card-us">
-                    <img class="loading-icon" alt="Grup Komunitas Belajar" src="asset/img/icon/Community.svg" />
-                    <div class="belajar-dari-nol">Grup Komunitas Belajar</div>
-                    <div class="mulai-dari-huruf">
+                    <img class="icon" alt="Grup Komunitas Belajar" src="asset/img/icon/Community.svg" />
+                    <div class="title-card">Grup Komunitas Belajar</div>
+                    <div class="title-content">
                         Kamu tidak belajar sendirian. Temukan teman seperjalanan yang saling menyemangati dalam
                         komunitas kami.
                     </div>
                 </div>
                 <div class="card-us">
-                    <img class="loading-icon" alt="Pengajar & Koordinator Aktif" src="asset/img/icon/Lecture.svg" />
-                    <div class="belajar-dari-nol">Pengajar & Koordinator Aktif</div>
-                    <div class="mulai-dari-huruf">
+                    <img class="icon" alt="Pengajar & Koordinator Aktif" src="asset/img/icon/Lecture.svg" />
+                    <div class="title-card">Pengajar & Koordinator Aktif</div>
+                    <div class="title-content">
                         Kami bantu awasi perkembanganmu, jawab pertanyaan, dan selalu siap memberi arahan jika kamu
                         bingung.
                     </div>
@@ -215,29 +299,25 @@
                 <div class="class-card"
                     style="box-shadow: 0px 0px 20px 2px rgba(37, 99, 235, 0.6); border: 2px solid var(--primary-base);">
                     <div class="free-stampt-icon" aria-hidden="true"></div>
-                    <div class="title-card">
-                        <div class="hiragana-katakana">Kelas Gratis</div>
-                    </div>
-                    <div class="untuk-kamu-yang-container">
+                    <div class="title-card">Kelas Gratis</div>
+                    <div class="title-content">
                         <p>Untuk kamu yang baru mulai belajar bahasa Jepang dari nol.</p>
                         <p>Termasuk: Hiragana, Katakana, Kosakata Dasar, Salam Sehari-hari.</p>
                     </div>
                     <div class="class-card-actions">
-                        <button class="btn btn-primary btn-class-card-secondary">Mulai Belajar Sekarang
+                        <button class="btn btn-primary">Mulai Belajar Sekarang
                             (GRATIS)</button>
                     </div>
                 </div>
                 <div class="class-card">
-                    <div class="title-card">
-                        <div class="hiragana-katakana">Kelas Berbayar (Lanjutan):</div>
-                    </div>
-                    <div class="untuk-kamu-yang-container">
+                    <div class="title-card"> Kelas Berbayar (Lanjutan):</div>
+                    <div class="title-content">
                         <p>Untuk kamu yang ingin melanjutkan ke level berikutnya.</p>
                         <p>Termasuk: Minna no Nihongo Bab 1–25, Grammar, Latihan Soal, & Sertifikat.</p>
                     </div>
                     <div class="class-card-actions">
-                        <button class="btn btn-primary btn-class-card-secondary">Buka Akses</button>
-                        <button class="btn btn-secondary btn-class-card-primary">Detail Kelas</button>
+                        <button class="btn btn-primary">Buka Akses</button>
+                        <button class="btn btn-secondary">Detail Kelas</button>
                     </div>
                 </div>
             </div>
