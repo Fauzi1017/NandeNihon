@@ -107,35 +107,6 @@ body {
   letter-spacing: normal;
 }
 
-/* All typography classes inherit base styles */
-.text-48-regular,
-.text-48-medium,
-.text-48-semibold,
-.text-32-regular,
-.text-32-medium,
-.text-32-semibold,
-.text-24-regular,
-.text-24-medium,
-.text-24-semibold,
-.text-20-regular,
-.text-20-medium,
-.text-20-semibold,
-.text-16-regular,
-.text-16-medium,
-.text-16-semibold,
-.text-14-regular,
-.text-14-medium,
-.text-14-semibold,
-.text-12-regular,
-.text-12-medium,
-.text-12-semibold,
-.text-10-regular,
-.text-10-medium,
-.text-10-semibold {
-  font-family: 'Noto Sans', sans-serif;
-  letter-spacing: normal;
-}
-
 /* Color System */
 :root {
   /* Primary Colors - Blue Scale */
@@ -187,209 +158,6 @@ body {
   --neutral-90: #1a1a1a;
 }
 
-/* Color Utility Classes - Background */
-.bg-primary-100,
-.bg-primary-90,
-.bg-primary-80,
-.bg-primary-70,
-.bg-primary-base,
-.bg-primary-50,
-.bg-primary-40,
-.bg-primary-30,
-.bg-primary-20,
-.bg-primary-10,
-.bg-secondary-100,
-.bg-secondary-90,
-.bg-secondary-80,
-.bg-secondary-70,
-.bg-secondary-base,
-.bg-secondary-50,
-.bg-secondary-40,
-.bg-secondary-30,
-.bg-secondary-20,
-.bg-secondary-10,
-.bg-tertiary-100,
-.bg-tertiary-90,
-.bg-tertiary-80,
-.bg-tertiary-70,
-.bg-tertiary-60,
-.bg-tertiary-50,
-.bg-tertiary-40,
-.bg-tertiary-30,
-.bg-tertiary-20,
-.bg-tertiary-10,
-.bg-neutral-0,
-.bg-neutral-10,
-.bg-neutral-20,
-.bg-neutral-30,
-.bg-neutral-40,
-.bg-neutral-50,
-.bg-neutral-60,
-.bg-neutral-70,
-.bg-neutral-80,
-.bg-neutral-90 {
-  font-family: 'Noto Sans', sans-serif;
-}
-
-.bg-primary-100 {
-  background-color: var(--primary-100);
-}
-
-.bg-primary-90 {
-  background-color: var(--primary-90);
-}
-
-.bg-primary-80 {
-  background-color: var(--primary-80);
-}
-
-.bg-primary-70 {
-  background-color: var(--primary-70);
-}
-
-.bg-primary-base {
-  background-color: var(--primary-base);
-}
-
-.bg-primary-50 {
-  background-color: var(--primary-50);
-}
-
-.bg-primary-40 {
-  background-color: var(--primary-40);
-}
-
-.bg-primary-30 {
-  background-color: var(--primary-30);
-}
-
-.bg-primary-20 {
-  background-color: var(--primary-20);
-}
-
-.bg-primary-10 {
-  background-color: var(--primary-10);
-}
-
-.bg-secondary-100 {
-  background-color: var(--secondary-100);
-}
-
-.bg-secondary-90 {
-  background-color: var(--secondary-90);
-}
-
-.bg-secondary-80 {
-  background-color: var(--secondary-80);
-}
-
-.bg-secondary-70 {
-  background-color: var(--secondary-70);
-}
-
-.bg-secondary-base {
-  background-color: var(--secondary-base);
-}
-
-.bg-secondary-50 {
-  background-color: var(--secondary-50);
-}
-
-.bg-secondary-40 {
-  background-color: var(--secondary-40);
-}
-
-.bg-secondary-30 {
-  background-color: var(--secondary-40);
-}
-
-.bg-secondary-20 {
-  background-color: var(--secondary-20);
-}
-
-.bg-secondary-10 {
-  background-color: var(--secondary-10);
-}
-
-.bg-tertiary-100 {
-  background-color: var(--tertiary-100);
-}
-
-.bg-tertiary-90 {
-  background-color: var(--tertiary-90);
-}
-
-.bg-tertiary-80 {
-  background-color: var(--tertiary-80);
-}
-
-.bg-tertiary-70 {
-  background-color: var(--tertiary-70);
-}
-
-.bg-tertiary-60 {
-  background-color: var(--tertiary-60);
-}
-
-.bg-tertiary-50 {
-  background-color: var(--tertiary-50);
-}
-
-.bg-tertiary-40 {
-  background-color: var(--tertiary-40);
-}
-
-.bg-tertiary-30 {
-  background-color: var(--tertiary-30);
-}
-
-.bg-tertiary-20 {
-  background-color: var(--tertiary-20);
-}
-
-.bg-tertiary-10 {
-  background-color: var(--tertiary-10);
-}
-
-.bg-neutral-0 {
-  background-color: var(--neutral-0);
-}
-
-.bg-neutral-10 {
-  background-color: var(--neutral-10);
-}
-
-.bg-neutral-20 {
-  background-color: var(--neutral-20);
-}
-
-.bg-neutral-30 {
-  background-color: var(--neutral-30);
-}
-
-.bg-neutral-40 {
-  background-color: var(--neutral-40);
-}
-
-.bg-neutral-50 {
-  background-color: var(--neutral-50);
-}
-
-.bg-neutral-60 {
-  background-color: var(--neutral-60);
-}
-
-.bg-neutral-70 {
-  background-color: var(--neutral-70);
-}
-
-.bg-neutral-80 {
-  background-color: var(--neutral-80);
-}
-
-.bg-neutral-90 {
-  background-color: var(--neutral-90);
-}
 /* Button Styles */
 .btn-primary,
 .btn-secondary,
@@ -557,7 +325,26 @@ body {
   /* Show shadow when scrolling */
 }
 
+/* General Styles card */
+.content-card {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: normal;
+}
 
+.title-card {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutral-90);
+  margin-bottom: 8px;
+  letter-spacing: normal;
+  text-align: center;
+}
+
+
+/* Header Navigation Styles */
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -1079,23 +866,6 @@ body {
   margin-bottom: 24px;
 }
 
-.section-2 .title-card {
-  font-family: 'Noto Sans', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 8px;
-  letter-spacing: normal;
-  text-align: center;
-}
-
-.section-2 .title-content {
-  font-family: 'Noto Sans', sans-serif;
-  font-size: 14px;
-  color: #222;
-  line-height: 1.6;
-  letter-spacing: normal;
-}
 
 /* Responsive */
 @media (max-width: 1024px) {
@@ -1412,11 +1182,9 @@ body {
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
-  gap: 16px;
   min-width: 320px;
-  max-width: 380px;
+  max-width: 400px;
   text-align: center;
-  font-size: 20px;
   color: var(--neutral-90);
   font-family: var(--font-noto-sans);
 }
@@ -1498,6 +1266,7 @@ body {
   height: min(100px);
   background: url("/asset/img/Free\ Stamp.svg");
   background-size: contain;
+  z-index: 2;
 }
 
 @media (max-width: 1024px) {
