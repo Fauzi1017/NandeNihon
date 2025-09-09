@@ -1640,6 +1640,25 @@ body {
   max-height: 100%;
 }
 
+/* Section Testimoni Marquee */
+.content-testimonial-marquee-container {
+  overflow: visible;
+  width: 100%;
+  position: relative;
+  gap: 20px;
+}
+
+.content-testimonial-marquee {
+  display: flex;
+  flex-direction: row-reverse;
+  width: max-content;
+  animation: marquee-left-to-right 60s linear infinite;
+  gap: 20px;
+  /* Ensure animation runs by default */
+  will-change: transform;
+}
+
+/* Section Team Marquee */
 .our-team-marquee-container {
   overflow: visible;
   width: 100%;
@@ -1669,6 +1688,16 @@ body {
   }
 
   100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-left-to-right {
+  100% {
+    transform: translateX(0%);
+  }
+
+  0% {
     transform: translateX(-50%);
   }
 }
