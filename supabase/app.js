@@ -13,6 +13,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const teamContainer = document.getElementById('team');
 const notesContainer = document.getElementById('notes');
+const container = document.getElementById('testimoni');
 
 function escapeHtml(s='') {
   return String(s).replace(/[&<>"']/g, ch => ({
@@ -101,7 +102,7 @@ async function loadNotes(){
   `).join('');
 }
 
-
+// load testimoni
 async function loadTestimoni(){
     container.innerHTML = '<p>Loading…</p>';
     const { data, error } = await supabase
@@ -127,10 +128,11 @@ async function loadTestimoni(){
               </div>
               <div class="box-name">
                   <div class="image-testimonial">
-                      <img src="${t.image || 'https://placehold.co/80'}" alt="${escapeHtml(t.name)}">
+                      <img src="${t.image}" alt="${escapeHtml(t.name)}">
                   </div>
-                  <div clas="name-user">${escapeHtml(t.name)}</div>
-                  <div class="tahun">${t.old ? t.old + ' years old' : ''}</div>
+                  <div class="name-user">${escapeHtml(t.name)}</div>
+                  <div class="tahun">${t.old ? t.old + ' Tahun' : ''}</div>
+                
               </div>
           </div>
       
