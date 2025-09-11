@@ -57,9 +57,9 @@ async function loadTeam(){
         <a href="#" title="X"><img class="social-media-icon" alt="X" src="/asset/img/icon/X.svg" style="width:32px;height:32px;"/></a>
       </div>
     </div>
+
     <div class="team-1">
     ${m.photo ? `<div class="img-container"><img src="${escapeHtml(m.photo)}" alt="Foto ${escapeHtml(m.nama)}" /></div>` : ''}
-      
       <div class="name-team">${renderRow(m.nama)}</div>
       <div class="position-team">${renderRow(m.jabatan)}</div>
       <div class="moto">${renderRow(m.moto)}</div>
@@ -121,7 +121,8 @@ async function loadTestimoni(){
     }
 
     container.innerHTML = data.map(t => `
-      
+
+
           <div class="testimoni">
               <div class="testimonial">
                   <div class="text-testimonial">"${escapeHtml(t.text_testi || '')}"</div>
@@ -131,10 +132,22 @@ async function loadTestimoni(){
                       <img src="${t.image}" alt="${escapeHtml(t.name)}">
                   </div>
                   <div class="name-user">${escapeHtml(t.name)}</div>
-                  <div class="tahun">${t.old ? t.old + ' Tahun' : ''}</div>
-                
+                  <div class="tahun">${t.old ? t.old + ' Tahun' : ''}</div>               
               </div>
           </div>
+          <div class="testimoni">
+              <div class="testimonial">
+                  <div class="text-testimonial">"${escapeHtml(t.text_testi || '')}"</div>
+              </div>
+              <div class="box-name">
+                  <div class="image-testimonial">
+                      <img src="${t.image}" alt="${escapeHtml(t.name)}">
+                  </div>
+                  <div class="name-user">${escapeHtml(t.name)}</div>
+                  <div class="tahun">${t.old ? t.old + ' Tahun' : ''}</div>               
+              </div>
+          </div>
+         
       
     `).join('');
   }

@@ -1533,15 +1533,18 @@ body {
   height: 100px;
   z-index: 2;
   background-color: #ffffff00;
+  box-shadow: inset 0 0 0 8px #ffffff;
 }
 
 .image-testimonial img {
   width: 100%;
   height: 100%;
+  border-color: #ffffff;
   border-radius: 100000px;
   object-fit: cover;     /* isi penuh, bisa terpotong */
   object-position: center;
   display: block;
+
 }
 
 /* Section Team */
@@ -1670,7 +1673,7 @@ body {
   display: flex;
   flex-direction: row-reverse;
   width: max-content;
-  animation: marquee-left-to-right 10s linear infinite;
+  animation: marquee-left-to-right 30s linear infinite;
   gap: 20px;
   /* Ensure animation runs by default */
   will-change: transform;
