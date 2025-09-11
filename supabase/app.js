@@ -57,18 +57,6 @@ async function loadTeam(){
         <a href="#" title="X"><img class="social-media-icon" alt="X" src="/asset/img/icon/X.svg" style="width:32px;height:32px;"/></a>
       </div>
     </div>
-
-    <div class="team-1">
-    ${m.photo ? `<div class="img-container"><img src="${escapeHtml(m.photo)}" alt="Foto ${escapeHtml(m.nama)}" /></div>` : ''}
-      <div class="name-team">${renderRow(m.nama)}</div>
-      <div class="position-team">${renderRow(m.jabatan)}</div>
-      <div class="moto">${renderRow(m.moto)}</div>
-      <div class="social-media">
-        ${m.email ? `<a href="mailto:${escapeHtml(m.email)}" target="_blank" rel="noopener" title="Email"><img class="social-media-icon" alt="Email" src="/asset/img/icon/mail.svg"/></a>` : ''}
-        ${m.instagram ? `<a href="https://instagram.com/${escapeHtml(m.instagram.replace(/^@/,''))}" target="_blank" rel="noopener" title="Instagram"><img class="social-media-icon" alt="Instagram" src="/asset/img/icon/Social Media.svg" style="width:32px;height:32px;"/></a>` : ''}
-        <a href="#" title="X"><img class="social-media-icon" alt="X" src="/asset/img/icon/X.svg" style="width:32px;height:32px;"/></a>
-      </div>
-    </div>
   `).join('');
   
 }
@@ -135,19 +123,7 @@ async function loadTestimoni(){
                   <div class="tahun">${t.old ? t.old + ' Tahun' : ''}</div>               
               </div>
           </div>
-          <div class="testimoni">
-              <div class="testimonial">
-                  <div class="text-testimonial">"${escapeHtml(t.text_testi || '')}"</div>
-              </div>
-              <div class="box-name">
-                  <div class="image-testimonial">
-                      <img src="${t.image}" alt="${escapeHtml(t.name)}">
-                  </div>
-                  <div class="name-user">${escapeHtml(t.name)}</div>
-                  <div class="tahun">${t.old ? t.old + ' Tahun' : ''}</div>               
-              </div>
-          </div>
-         
+          
       
     `).join('');
   }

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body{ margin:0; font-family: system-ui, sans-serif; background:#f9fafb; }
+    .login, .dashboard{ display:none; padding:20px; }
+    .active{ display:block; }
+
+    /* Layout Dashboard */
+    .layout{ display:flex; min-height:100vh; }
+    .sidebar{ width:220px; background:#111827; color:#fff; padding:20px; }
+    .sidebar h2{ color:#fff; font-size:18px; margin-bottom:20px; }
+    .sidebar ul{ list-style:none; padding:0; margin:0; }
+    .sidebar li{ margin-bottom:10px; }
+    .sidebar button{ width:100%; padding:10px; border:none; background:#1f2937; color:#fff; border-radius:6px; cursor:pointer; text-align:left; }
+    .sidebar button:hover{ background:#374151; }
+
+    .content{ flex:1; padding:20px; }
+    table{ width:100%; border-collapse:collapse; background:#fff; border-radius:8px; overflow:hidden; }
+    th,td{ border-bottom:1px solid #eee; padding:8px 12px; text-align:left; font-size:14px; }
+    th{ background:#f3f4f6; }
+    .topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+    .btn{ background:#2563eb; color:#fff; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
+    .btn:hover{ background:#1d4ed8; }
+    .error{ color:#b91c1c; margin-top:10px; }
+  </style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="login active" id="login-screen">
+  <h1>Admin Login</h1>
+  <form id="login-form">
+    <input type="email" id="email" placeholder="Email" required style="display:block;margin-bottom:10px;padding:8px;width:240px;">
+    <input type="password" id="password" placeholder="Password" required style="display:block;margin-bottom:10px;padding:8px;width:240px;">
+    <button class="btn" type="submit">Login</button>
+  </form>
+  <p id="login-error" class="error"></p>
+</div>
+
+<!-- Dashboard Screen -->
+<div class="dashboard" id="dashboard-screen">
+  <div class="layout">
+    <div class="sidebar">
+      <h2>Dashboard</h2>
+      <ul>
+        <li><button data-table="team">Team</button></li>
+        <li><button data-table="notes">Notes</button></li>
+        <li><button data-table="testimoni">Testimoni</button></li>
+      </ul>
+      <button class="btn" id="logout-btn" style="margin-top:20px;background:#dc2626;">Logout</button>
+    </div>
+    <div class="content">
+      <div class="topbar">
+        <h1 id="table-title">Welcome</h1>
+      </div>
+      <div id="table-container"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+// TODO: ganti dengan kredensial Supabase kamu
+const SUPABASE_URL = 'https://bpzeveffsxawqdbojkfu.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwemV2ZWZmc3hhd3FkYm9qa2Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0ODkxOTMsImV4cCI6MjA3MzA2NTE5M30.LzL2-yLVxC3Gh6-a-nF5kAEi3vhc-ENMGctpBbuLdhA';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+
+const loginScreen = document.getElementById('login-screen')
+const dashboardScreen = document.getElementById('dashboard-screen')
+const loginForm = document.getElementById('login-form')
+const loginError = document.getElementById('login-error')
+const logoutBtn = document.getElementById('logout-btn')
+const tableContainer = document.getElementById('table-container')
+const tableTitle = document.getElementById('table-title')
+
+// Check session
+const { data: { session } } = await supabase.auth.getSession()
+if(session){
+  showDashboard()
+}
+
+// Login form
+loginForm.addEventListener('submit', async (e)=>{
+  e.preventDefault()
+  loginError.textContent = ''
+  const email = document.getElementById('email').value
+  const password = document.getElementById('password').value
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  if(error){
+    loginError.textContent = error.message
+  } else {
+    showDashboard()
+  }
+})
+
+// Logout
+logoutBtn.addEventListener('click', async ()=>{
+  await supabase.auth.signOut()
+  loginScreen.classList.add('active')
+  dashboardScreen.classList.remove('active')
+})
+
+// Show Dashboard
+function showDashboard(){
+  loginScreen.classList.remove('active')
+  dashboardScreen.classList.add('active')
+}
+
+// Sidebar buttons
+document.querySelectorAll('.sidebar button[data-table]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const table = btn.dataset.table
+    loadTable(table)
+  })
+})
+
+// Load table data
+async function loadTable(table){
+  tableTitle.textContent = table.charAt(0).toUpperCase() + table.slice(1)
+  tableContainer.innerHTML = '<p>Loading...</p>'
+  let { data, error } = await supabase.from(table).select('*').limit(50)
+  if(error){
+    tableContainer.innerHTML = `<p style="color:red">${error.message}</p>`
+    return
+  }
+  if(!data || data.length===0){
+    tableContainer.innerHTML = '<p>No data found.</p>'
+    return
+  }
+  // Render table
+  const cols = Object.keys(data[0])
+  const html = `
+    <table>
+      <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+      <tbody>
+        ${data.map(row=>`
+          <tr>${cols.map(c=>`<td>${escapeHtml(row[c])}</td>`).join('')}</tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `
+  tableContainer.innerHTML = html
+}
+
+function escapeHtml(s=''){
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))
+}
+</script>
+</body>
+</html>
