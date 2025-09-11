@@ -1,2 +1,2 @@
-# Nandedatabase
-
+# NandeNihon
+Website for japan education

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nande Nihon</title>
+    <link rel="icon" type="image/png" href="asset/img/favicon.png">
+    <link rel="stylesheet" href="asset/style.css">
+
+</head>
+
+<body>
+    <div class="hero__bg" aria-hidden="true"></div>
+
+    <!-- Header Navigation -->
+    <header class="header" id="mainHeader">
+        <nav class="nav">
+            <div class="nav-container">
+                <!-- Logo/Brand -->
+                <div class="nav-brand">
+                    <a href="#" class="brand-link" id="toTopBtn" title="Kembali ke atas">
+                        <img src="asset/img/logo.svg" alt="NandeNihon" class="brand-logo" />
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <ul class="nav-menu" id="mainNavMenu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" data-nav="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#Tentang" class="nav-link" data-nav="tentang">Tentang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#kelas" class="nav-link" data-nav="kelas">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://nandenihon.com/category/artikel/" target="_blank" class="nav-link">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#kontak" class="nav-link" data-nav="kontak">Kontak</a>
+                    </li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <script>
+                    // Make nav-link active while menu clicked/selected
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const navMenu = document.getElementById('mainNavMenu');
+                        const navLinks = navMenu.querySelectorAll('.nav-link');
+
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function (e) {
+                                // For external links, don't change active state
+                                if (link.target === '_blank' || link.href.startsWith('http')) {
+                                    return;
+                                }
+                                navLinks.forEach(l => l.classList.remove('active'));
+                                this.classList.add('active');
+                            });
+                        });
+
+                        // Optional: Set active based on scroll position (for in-page anchors)
+                        window.addEventListener('scroll', function () {
+                            const sections = [
+                                { id: 'Tentang', nav: 'tentang' },
+                                { id: 'kelas', nav: 'kelas' },
+                                { id: 'kontak', nav: 'kontak' }
+                            ];
+                            let found = false;
+                            for (let i = 0; i < sections.length; i++) {
+                                const section = document.getElementById(sections[i].id);
+                                if (section) {
+                                    const rect = section.getBoundingClientRect();
+                                    if (rect.top <= 80 && rect.bottom > 80) {
+                                        navLinks.forEach(l => l.classList.remove('active'));
+                                        const activeLink = navMenu.querySelector('.nav-link[data-nav="' + sections[i].nav + '"]');
+                                        if (activeLink) activeLink.classList.add('active');
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            // If no section found, set Home as active
+                            if (!found) {
+                                navLinks.forEach(l => l.classList.remove('active'));
+                                const homeLink = navMenu.querySelector('.nav-link[data-nav="home"]');
+                                if (homeLink) homeLink.classList.add('active');
+                            }
+                        });
+                    });
+                </script>
+
+                <!-- Mobile Menu Toggle Script -->
+                <script>
+                    // Mobile menu toggle functionality
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                        const navMenu = document.getElementById('mainNavMenu');
+                        const header = document.getElementById('mainHeader');
+
+                        mobileMenuBtn.addEventListener('click', function () {
+                            navMenu.classList.toggle('mobile-menu-open');
+                            mobileMenuBtn.classList.toggle('mobile-menu-active');
+                            header.classList.toggle('mobile-menu-open');
+                        });
+
+                        // Close mobile menu when clicking on a link
+                        const navLinks = navMenu.querySelectorAll('.nav-link');
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function () {
+                                navMenu.classList.remove('mobile-menu-open');
+                                mobileMenuBtn.classList.remove('mobile-menu-active');
+                                header.classList.remove('mobile-menu-open');
+                            });
+                        });
+
+                        // Close mobile menu when clicking outside
+                        document.addEventListener('click', function (e) {
+                            if (!header.contains(e.target)) {
+                                navMenu.classList.remove('mobile-menu-open');
+                                mobileMenuBtn.classList.remove('mobile-menu-active');
+                                header.classList.remove('mobile-menu-open');
+                            }
+                        });
+                    });
+                </script>
+
+                <!-- Contact Button -->
+                <div class="nav-action">
+                    <button class="btn btn-primary">Hubungi Kami</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <style>
+        .header.scrolled {
+            background-color: #ffffff;
+            transition: background-color 0.3s;
+        }
+    </style>
+    <script>
+        // Fill color on scroll
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to top on logo click
+        document.addEventListener('DOMContentLoaded', function () {
+            const toTopBtn = document.getElementById('toTopBtn');
+            toTopBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+
+        <section class="hero-container">
+            <!-- Left Section - Text and CTA -->
+            <div class="hero-content">
+                <div class="hero-title">Belajar Bahasa Jepang</div>
+                <div class="hero-subtitle">Tidak Harus Sulit dan Menakutkan.</div>
+                <p class="hero-description">
+                    Dari pengalaman nyata belajar dari nol, kami hadirkan ruang belajar yang hangat, terstruktur,
+                    dan bisa kamu nikmati meskipun kamu belum tahu satu huruf pun.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary">Mulai Belajar</button>
+                    <button class="btn btn-secondary">Lihat Kelas</button>
+                </div>
+            </div>
+
+            <!-- Right Section - Maskot Image -->
+            <div class="hero-illustration">
+                <img class="maskot-img" src="asset/img/maskot.svg" alt="Maskot NandeNihon" />
+            </div>
+            <style>
+                @media (max-width: 1080px) {
+                    .maskot-img {
+                        display: none !important;
+                    }
+                }
+            </style>
+        </section>
+
+        <!-- Section 2: What You Get -->
+        <div id="you-get" class="section-2">
+            <div class="title" style="margin-bottom: 48px;">
+                <span class="section-title">Apa yang Kamu Dapatkan di Nande Nihon?</span>
+            </div>
+            <div class="content">
+                <div class="card-us">
+                    <img class="icon" alt="Belajar dari Nol" src="asset/img/icon/Loading.svg" />
+                    <div class="title-card">Belajar dari Nol</div>
+                    <div class="content-card">
+                        Mulai dari huruf Hiragana, Katakana, hingga tata bahasa dasar dan percakapan sehari-hari. Materi
+                        disusun terarah dan mudah dipahami.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="icon" alt="Kelas Online Interaktif" src="asset/img/icon/Online Class.svg" />
+                    <div class="title-card">Kelas Online Interaktif</div>
+                    <div class="content-card">
+                        4x pertemuan Zoom. Setiap sesi terekam dan bisa dipelajari ulang. Cocok untuk pemula yang perlu
+                        fleksibilitas waktu.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="icon" alt="E-book & Worksheet Eksklusif" src="asset/img/icon/Ebook.svg" />
+                    <div class="title-card">E-book & Worksheet Eksklusif</div>
+                    <div class="content-card">
+                        Desain menarik, dan bisa dicetak. Membantu kamu latihan mandiri dengan cara yang menyenangkan.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="icon" alt="Pembelajaran Budaya Jepang" src="asset/img/icon/Sakura.svg" />
+                    <div class="title-card">Pembelajaran Budaya Jepang</div>
+                    <div class="content-card">
+                        Bukan cuma bahasanya, kamu juga belajar etika, kehidupan orang Jepang, dan cara memahami budaya
+                        mereka dari dalam.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="icon" alt="Grup Komunitas Belajar" src="asset/img/icon/Community.svg" />
+                    <div class="title-card">Grup Komunitas Belajar</div>
+                    <div class="content-card">
+                        Kamu tidak belajar sendirian. Temukan teman seperjalanan yang saling menyemangati dalam
+                        komunitas kami.
+                    </div>
+                </div>
+                <div class="card-us">
+                    <img class="icon" alt="Pengajar & Koordinator Aktif" src="asset/img/icon/Lecture.svg" />
+                    <div class="title-card">Pengajar & Koordinator Aktif</div>
+                    <div class="content-card">
+                        Kami bantu awasi perkembanganmu, jawab pertanyaan, dan selalu siap memberi arahan jika kamu
+                        bingung.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Why We Exist -->
+        <section id="Tentang" class="section-3">
+            <div class="section-3__bg" aria-hidden="true"></div>
+            <div class="title">
+                <b class="section-title">Kenapa kami ada?</b>
+                <div class="dibuat-oleh-mereka">Dibuat oleh Mereka yang Pernah Ada di Posisi Kamu</div>
+            </div>
+            <div class="content">
+                <div class="kami-bukan-lembaga-container">
+                    <p>
+                        Kami bukan lembaga bahasa besar. Kami hanyalah orang-orang yang dulu juga bingung saat pertama
+                        kali belajar bahasa Jepang. Dari duduk sendiri sambil menyalin hiragana, sampai akhirnya berani
+                        berbicara langsung dengan orang Jepang semua kami jalani dari bawah.
+                    </p>
+                    <b style="color: var(--primary-base);">Nande Nihon</b>
+                    <span> adalah bentuk nyata dari pengalaman itu Belajar dari dasar,
+                        langkah demi langkah Dibimbing dengan sabar Dalam suasana yang hangat dan menyenangkan Kami
+                        ingin kamu tidak merasa sendirian. Kami ingin kamu merasa didukung. Dan kami percaya semua orang
+                        bisa belajar bahasa Jepang.</span>
+
+                </div>
+                <div class="image-fill">
+                    <img class="image-fill-inner" alt="" src="/asset/img/img-sec3.png"
+                        style="width: auto; height: 420px; ;">
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Kelas Belajar -->
+        <div id="kelas" class="section-4">
+            <div class="title">
+                <b class="section-title">Belajar Bahasa Jepang Mulai dari Nol Gratis
+                    & Terstruktur!</b>
+                <p class="dibuat-oleh-mereka" style="margin-bottom: -24px; font-size: 16px; color: var(--neutral-90);">
+                    Mulai dari Hiragana, Katakana, hingga percakapan sehari-hari!</p>
+                <p class="dibuat-oleh-mereka" style="margin-bottom: -24px; font-size: 16px; color: var(--neutral-90);">
+                    Dapatkan materi dasar secara gratis dan lanjutkan ke kelas berbayar untuk level lanjutan! Belajar
+                    lebih mudah, terarah, dan fleksibel.</p>
+            </div>
+
+            <div class="content--sec4">
+                <div class="class-card"
+                    style="box-shadow: 0px 0px 20px 2px rgba(37, 99, 235, 0.6); border: 2px solid var(--primary-base);">
+                    <div class="free-stampt-icon" aria-hidden="true"></div>
+                    <div class="title-card">Kelas Gratis</div>
+                    <div class="content-card">
+                        <p>Untuk kamu yang baru mulai belajar bahasa Jepang dari nol.</p>
+                        <p>Termasuk: Hiragana, Katakana, Kosakata Dasar, Salam Sehari-hari.</p>
+                    </div>
+                    <div class="class-card-actions">
+                        <button class="btn btn-primary">Mulai Belajar Sekarang
+                            (GRATIS)</button>
+                    </div>
+                </div>
+                <div class="class-card">
+                    <div class="title-card"> Kelas Berbayar (Lanjutan):</div>
+                    <div class="content-card">
+                        <p>Untuk kamu yang ingin melanjutkan ke level berikutnya.</p>
+                        <p>Termasuk: Minna no Nihongo Bab 1–25, Grammar, Latihan Soal, & Sertifikat.</p>
+                    </div>
+                    <div class="class-card-actions">
+                        <button class="btn btn-primary">Buka Akses</button>
+                        <button class="btn btn-secondary">Detail Kelas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section News -->
+        <div id="artikel" class="section-news">
+            <div class="publikasi-parent">
+                <b class="publikasi">Publikasi</b>
+                <div class="tertiary">
+                    <b class="learn-more">Lihat Semua</b>
+                </div>
+            </div>
+            <div class="terbaru">
+                <b class="section-news-terbaru">Terbaru</b>
+                <div class="news">
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="terbaru">
+                <b class="section-news-terbaru">Terpopuler</b>
+                <div class="news">
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                    <div class="news-3">
+                        <img class="image-icon" alt="" src="/asset/img/news.jpg">
+
+                        <div class="note">
+                            <div class="tangga">
+                                <div class="lifestyle">17 Agustus 2024</div>
+                            </div>
+                            <div class="category">
+                                <div class="lifestyle">Lifestyle</div>
+                            </div>
+                        </div>
+                        <div class="caption">
+                            <div class="lima-destinasi-yang">Lima Destinasi yang Wajib Anda Kunjungi di Jepang</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Testimoni -->
+        <div class="section-4">
+
+            <div class="title">
+                <b class="section-title">Mereka yang telah mulai bersama Kami</b>
+            </div>
+            <h1>Testimoni</h1>
+            <div id="testimoni"class="jk" style="display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))"></div>
+            <div class="content-testimonial-marquee-container">
+                <div class="content-testimonial-marquee">
+                    <!-- First content for marquee -->
+                    <div class="content-testimonial">
+                        <div class="testimoni">
+                            <div class="testimonial">
+                                <div class="text-testimonial">selama aku belajar di nande nihon menurut aku, belajar di
+                                    nande
+                                    nihon sangat menyenangkan, cara penyampaian sensei enak didengar dan mudah dipahami
+                                    bagi aku
+                                    yang pemula, materi jelas langsung dapet feel nya l. Terima kasih sensei dan nande
+                                    nihon
+                                    terus bergerak untuk berbuat kebaikan, bermanfaat banget kelas gratisnya</div>
+                            </div>
+                            <div class="box-name">
+                                <div class="name-user">Ajis</div>
+                                <div class="tahun">25 tahun</div>
+                                <img class="image-testimonial" alt="" src="/asset/img/azis.jpeg">
+                            </div>
+                        </div>
+                        <div class="testimoni">
+                            <div class="testimonial">
+                                <div class="text-testimonial">"Selama pembejalan seru sih, mudah di mengerti dan di
+                                    pahami, tpi
+                                    mines nya karena jarang ada kelasny jadi suka lupa² apalagi kalo g belajar mandiri
+                                    sama
+                                    sekali. Terus untuk mentorny All Out banget, sabar ny luar biasa ya, keren
+                                    pokoknya".
+                                    Saran nya "mungkin pertemuan nya bisa lebih banyak lagi hehe </div>
+
+                            </div>
+                            <div class="box-name">
+                                <div class="name-user">Deden</div>
+                                <div class="tahun">24 tahun</div>
+                                <img class="image-testimonial" alt="" src="/asset/img/deden.jpeg">
+
+                            </div>
+                        </div>
+                        <div class="testimoni">
+                            <div class="testimonial">
+                                <div class="text-testimonial">"Selama pembejalan seru sih, mudah di mengerti dan di
+                                    pahami, tpi
+                                    mines nya karena jarang ada kelasny jadi suka lupa² apalagi kalo g belajar mandiri
+                                    sama
+                                    sekali. Terus untuk mentorny All Out banget, sabar ny luar biasa ya, keren
+                                    pokoknya".
+                                    Saran nya "mungkin pertemuan nya bisa lebih banyak lagi hehe </div>
+
+                            </div>
+                            <div class="box-name">
+                                <div class="name-user">Deden</div>
+                                <div class="tahun">24 tahun</div>
+                                <img class="image-testimonial" alt="" src="/asset/img/deden.jpeg">
+
+                            </div>
+
+                        </div>
+                        <!-- Second content for marquee -->
+
+                        <div class="testimoni">
+                            <div class="testimonial">
+                                <div class="text-testimonial">selama aku belajar di nande nihon menurut aku, belajar di
+                                    nande
+                                    nihon sangat menyenangkan, cara penyampaian sensei enak didengar dan mudah dipahami
+                                    bagi aku
+                                    yang pemula, materi jelas langsung dapet feel nya l. Terima kasih sensei dan nande
+                                    nihon
+                                    terus bergerak untuk berbuat kebaikan, bermanfaat banget kelas gratisnya</div>
+                            </div>
+                            <div class="box-name">
+                                <div class="name-user">Ajis</div>
+                                <div class="tahun">25 tahun</div>
+                                <img class="image-testimonial" alt="" src="/asset/img/azis.jpeg">
+
+                            </div>
+                        </div>
+                        <div class="testimoni">
+                            <div class="testimonial">
+                                <div class="text-testimonial">"Selama pembejalan seru sih, mudah di mengerti dan di
+                                    pahami, tpi
+                                    mines nya karena jarang ada kelasny jadi suka lupa² apalagi kalo g belajar mandiri
+                                    sama
+                                    sekali. Terus untuk mentorny All Out banget, sabar ny luar biasa ya, keren
+                                    pokoknya".
+                                    Saran nya "mungkin pertemuan nya bisa lebih banyak lagi hehe </div>
+
+                            </div>
+                            <div class="box-name">
+                                <div class="name-user">Deden</div>
+                                <div class="tahun">24 tahun</div>
+                                <img class="image-testimonial" alt="" src="/asset/img/deden.jpeg">
+
+                            </div>
+                        </div>
+                        <div class="testimoni">
+                            <div class="testimonial">
+                                <div class="text-testimonial">"Selama pembejalan seru sih, mudah di mengerti dan di
+                                    pahami, tpi
+                                    mines nya karena jarang ada kelasny jadi suka lupa² apalagi kalo g belajar mandiri
+                                    sama
+                                    sekali. Terus untuk mentorny All Out banget, sabar ny luar biasa ya, keren
+                                    pokoknya".
+                                    Saran nya "mungkin pertemuan nya bisa lebih banyak lagi hehe </div>
+
+                            </div>
+                            <div class="box-name">
+                                <div class="name-user">Deden</div>
+                                <div class="tahun">24 tahun</div>
+                                <img class="image-testimonial" alt="" src="/asset/img/deden.jpeg">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Team -->
+        <div class="section-10">
+            <div class="title">
+                <b class="section-title">Temui Tim Kami</b>
+            </div>
+            <div class="our-team-marquee-container">
+                <div class="our-team-marquee">
+                    <div id="team" class="our-team"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <div class="cta-content">
+                    <h2 class="cta-title">Jepang Mungkin jauh, Tapi mimpimu ngga harus</h2>
+                    <p class="cta-description">Di Nande Nihon, kamu nggak belajar sendirian. Kami percaya setiap orang
+                        berhak belajar dengan cara yang bikin tenang dan percaya diri. Kamu sudah sampai di halaman ini
+                        artinya kamu siap memulai. Sekarang waktunya kamu percaya, bahwa kamu bisa.</p>
+                </div>
+
+                <div class="cta-buttons">
+                    <button class="btn btn-primary btn-class-card-primary">Gabung Sekarang</button>
+                    <button class="btn btn-secondary btn-class-card-secondary">Konsultasi Gratis</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="kontak" class="footer">
+        <!-- Top Section - Light Blue Background -->
+        <div class="footer-top">
+            <div class="footer-container">
+                <!-- Left Column -->
+                <div class="footer-left">
+                    <div class="footer-brand">
+                        <img alt="Nande Nihon Logo" src="asset/img/logo.svg">
+
+                    </div>
+                    <p class="footer-tagline">Temukan Dunia Jepang Bersama Kami</p>
+                    <nav class="footer-nav">
+                        <a href="#" class="footer-nav-link">Home</a>
+                        <a href="#" class="footer-nav-link">Tentang</a>
+                        <a href="#" class="footer-nav-link">Kelas</a>
+                        <a href="#" class="footer-nav-link">Artikel</a>
+                        <a href="#" class="footer-nav-link">Kontak</a>
+                    </nav>
+                </div>
+
+                <!-- Right Column -->
+                <div class="footer-right">
+                    <h4 class="footer-contact-title">Kontak Kami</h4>
+                    <div class="footer-contact-info">
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="Email" src="asset/img/icon/mail.svg">
+                            <span class="contact-text">Nandenihon6@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="WhatsApp" src="asset/img/icon/wa.svg">
+                            <span class="contact-text">+62 812-9923-6462</span>
+                        </div>
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="Instagram" src="asset/img/icon/Social Media.svg">
+                            <span class="contact-text">@nandenihon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section - Dark Blue Background -->
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p class="footer-copyright">© 2025 Nande Nihon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script type="module" src="/supabase/app.js"></script>
+
+</body>
+
+</html>

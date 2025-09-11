@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Testimoni</title>
+  <link rel="stylesheet" href="/asset/style.css" />
+  <style>
+    body{ font-family: system-ui, sans-serif; margin:24px; background:#f9fafb; }
+    h1{ margin-bottom:16px; }
+    .grid{ display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card{ background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px;
+           box-shadow:0 3px 10px rgba(0,0,0,.05); text-align:center; }
+    .card img{ width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:10px; }
+    .card h3{ margin:6px 0; font-size:18px; }
+    .card p{ margin:4px 0; font-size:14px; color:#4b5563; }
+    .card .age{ font-size:13px; color:#6b7280; }
+  </style>
+</head>
+<body>
+  <h1>Testimoni</h1>
+  <div id="testimoni" class="grid"></div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    // TODO: replace with your Supabase credentials
+    const SUPABASE_URL = 'https://bpzeveffsxawqdbojkfu.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwemV2ZWZmc3hhd3FkYm9qa2Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0ODkxOTMsImV4cCI6MjA3MzA2NTE5M30.LzL2-yLVxC3Gh6-a-nF5kAEi3vhc-ENMGctpBbuLdhA';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const container = document.getElementById('testimoni');
+
+    function escapeHtml(s=''){
+      return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    async function loadTestimoni(){
+      container.innerHTML = '<p>Loading…</p>';
+      const { data, error } = await supabase
+        .from('testimoni')
+        .select('id, name, old, image, text_testi')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = `<p style="color:red">${error.message}</p>`;
+        return;
+      }
+
+      if (!data || data.length === 0){
+        container.innerHTML = '<p>No testimonies yet.</p>';
+        return;
+      }
+
+      container.innerHTML = data.map(t => `
+        
+            <div class="testimoni">
+                <div class="testimonial">
+                    <div class="text-testimonial">"${escapeHtml(t.text_testi || '')}"</div>
+                </div>
+                <div class="box-name">
+                    <div class="image-testimonial">
+                        <img src="${t.image || 'https://placehold.co/80'}" alt="${escapeHtml(t.name)}">
+                    </div>
+                    <div clas="name-user">${escapeHtml(t.name)}</div>
+                    <div class="tahun">${t.old ? t.old + ' years old' : ''}</div>
+                </div>
+            </div>
+        
+      `).join('');
+    }
+
+    loadTestimoni();
+  </script>
+</body>
+</html>
