@@ -1,0 +1,569 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+// Supabase configuration
+const SUPABASE_URL = 'https://bpzeveffsxawqdbojkfu.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwemV2ZWZmc3hhd3FkYm9qa2Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0ODkxOTMsImV4cCI6MjA3MzA2NTE5M30.LzL2-yLVxC3Gh6-a-nF5kAEi3vhc-ENMGctpBbuLdhA';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Global variables
+let currentUser = null;
+let currentSection = 'dashboard';
+
+// DOM elements
+const pageTitle = document.getElementById('pageTitle');
+const userEmail = document.getElementById('userEmail');
+const logoutBtn = document.getElementById('logoutBtn');
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+
+// Check authentication and initialize
+async function init() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    currentUser = session.user;
+    userEmail.textContent = currentUser.email;
+    
+    // Load dashboard data
+    await loadDashboard();
+    
+    // Set up event listeners
+    setupEventListeners();
+}
+
+// Set up event listeners
+function setupEventListeners() {
+    // Navigation buttons
+    document.querySelectorAll('.nav-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.dataset.section;
+            loadSection(section);
+        });
+    });
+
+    // Logout button
+    logoutBtn.addEventListener('click', async () => {
+        await supabase.auth.signOut();
+        window.location.href = 'login.html';
+    });
+
+    // Modal close
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
+
+// Load section
+async function loadSection(section) {
+    // Update navigation
+    document.querySelectorAll('.nav-button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-section="${section}"]`).classList.add('active');
+
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('active');
+    });
+
+    // Show current section
+    document.getElementById(`${section}-section`).classList.add('active');
+
+    // Update page title
+    pageTitle.textContent = section.charAt(0).toUpperCase() + section.slice(1);
+
+    // Load section data
+    currentSection = section;
+    switch (section) {
+        case 'dashboard':
+            await loadDashboard();
+            break;
+        case 'team':
+            await loadTeam();
+            break;
+        case 'testimoni':
+            await loadTestimoni();
+            break;
+        case 'notes':
+            await loadNotes();
+            break;
+    }
+}
+
+// Load dashboard overview
+async function loadDashboard() {
+    try {
+        // Load counts
+        const [teamData, testimoniData, notesData] = await Promise.all([
+            supabase.from('team').select('id', { count: 'exact' }),
+            supabase.from('testimoni').select('id', { count: 'exact' }),
+            supabase.from('notes').select('id', { count: 'exact' }).eq('is_published', true)
+        ]);
+
+        document.getElementById('teamCount').textContent = teamData.count || 0;
+        document.getElementById('testimoniCount').textContent = testimoniData.count || 0;
+        document.getElementById('notesCount').textContent = notesData.count || 0;
+
+        // Load recent activity
+        await loadRecentActivity();
+    } catch (error) {
+        console.error('Error loading dashboard:', error);
+    }
+}
+
+// Load recent activity
+async function loadRecentActivity() {
+    const recentActivity = document.getElementById('recentActivity');
+    recentActivity.innerHTML = '<div class="loading">Loading recent activity...</div>';
+
+    try {
+        const { data: teamData } = await supabase
+            .from('team')
+            .select('nama, created_at')
+            .order('created_at', { ascending: false })
+            .limit(3);
+
+        const { data: testimoniData } = await supabase
+            .from('testimoni')
+            .select('name, created_at')
+            .order('created_at', { ascending: false })
+            .limit(3);
+
+        const activities = [
+            ...(teamData || []).map(item => ({
+                type: 'team',
+                text: `New team member: ${item.nama}`,
+                date: new Date(item.created_at)
+            })),
+            ...(testimoniData || []).map(item => ({
+                type: 'testimoni',
+                text: `New testimonial from ${item.name}`,
+                date: new Date(item.created_at)
+            }))
+        ].sort((a, b) => b.date - a.date).slice(0, 5);
+
+        if (activities.length === 0) {
+            recentActivity.innerHTML = '<div class="empty-state">No recent activity</div>';
+            return;
+        }
+
+        recentActivity.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${activities.map(activity => `
+                        <tr>
+                            <td>${escapeHtml(activity.text)}</td>
+                            <td>${activity.date.toLocaleDateString()}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } catch (error) {
+        recentActivity.innerHTML = '<div class="error">Error loading recent activity</div>';
+    }
+}
+
+// Load team data
+async function loadTeam() {
+    const teamTable = document.getElementById('teamTable');
+    teamTable.innerHTML = '<div class="loading">Loading team members...</div>';
+
+    try {
+        const { data, error } = await supabase
+            .from('team')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            teamTable.innerHTML = '<div class="empty-state">No team members found</div>';
+            return;
+        }
+
+        teamTable.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(member => `
+                        <tr>
+                            <td>
+                                <img src="${member.photo || 'https://placehold.co/40'}" 
+                                     alt="${escapeHtml(member.nama)}" 
+                                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                            </td>
+                            <td>${escapeHtml(member.nama || '')}</td>
+                            <td>${escapeHtml(member.jabatan || '')}</td>
+                            <td>${escapeHtml(member.email || '')}</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-secondary" onclick="editItem('team', ${member.id})">Edit</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem('team', ${member.id})">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } catch (error) {
+        teamTable.innerHTML = `<div class="error">Error loading team: ${error.message}</div>`;
+    }
+}
+
+// Load testimoni data
+async function loadTestimoni() {
+    const testimoniTable = document.getElementById('testimoniTable');
+    testimoniTable.innerHTML = '<div class="loading">Loading testimonials...</div>';
+
+    try {
+        const { data, error } = await supabase
+            .from('testimoni')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            testimoniTable.innerHTML = '<div class="empty-state">No testimonials found</div>';
+            return;
+        }
+
+        testimoniTable.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Testimonial</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(testimoni => `
+                        <tr>
+                            <td>
+                                <img src="${testimoni.image || 'https://placehold.co/40'}" 
+                                     alt="${escapeHtml(testimoni.name)}" 
+                                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                            </td>
+                            <td>${escapeHtml(testimoni.name || '')}</td>
+                            <td>${testimoni.old ? testimoni.old + ' years' : ''}</td>
+                            <td>${escapeHtml((testimoni.text_testi || '').substring(0, 100))}${(testimoni.text_testi || '').length > 100 ? '...' : ''}</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-secondary" onclick="editItem('testimoni', ${testimoni.id})">Edit</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem('testimoni', ${testimoni.id})">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } catch (error) {
+        testimoniTable.innerHTML = `<div class="error">Error loading testimonials: ${error.message}</div>`;
+    }
+}
+
+// Load notes data
+async function loadNotes() {
+    const notesTable = document.getElementById('notesTable');
+    notesTable.innerHTML = '<div class="loading">Loading articles...</div>';
+
+    try {
+        const { data, error } = await supabase
+            .from('notes')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            notesTable.innerHTML = '<div class="empty-state">No articles found</div>';
+            return;
+        }
+
+        notesTable.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Published</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(note => `
+                        <tr>
+                            <td>${escapeHtml(note.title || '')}</td>
+                            <td>${escapeHtml((note.content || '').substring(0, 100))}${(note.content || '').length > 100 ? '...' : ''}</td>
+                            <td>${note.is_published ? 'Yes' : 'No'}</td>
+                            <td>${new Date(note.created_at).toLocaleDateString()}</td>
+                            <td class="actions">
+                                <button class="btn btn-sm btn-secondary" onclick="editItem('notes', ${note.id})">Edit</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem('notes', ${note.id})">Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } catch (error) {
+        notesTable.innerHTML = `<div class="error">Error loading articles: ${error.message}</div>`;
+    }
+}
+
+// Open modal for adding/editing
+function openModal(type, id = null) {
+    modalTitle.textContent = id ? `Edit ${type}` : `Add ${type}`;
+    
+    let formHTML = '';
+    switch (type) {
+        case 'team':
+            formHTML = getTeamForm(id);
+            break;
+        case 'testimoni':
+            formHTML = getTestimoniForm(id);
+            break;
+        case 'notes':
+            formHTML = getNotesForm(id);
+            break;
+    }
+
+    modalBody.innerHTML = formHTML;
+    modal.style.display = 'block';
+
+    // Set up form submission
+    const form = document.getElementById('itemForm');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            saveItem(type, id);
+        });
+    }
+}
+
+// Close modal
+function closeModal() {
+    modal.style.display = 'none';
+    modalBody.innerHTML = '';
+}
+
+// Get team form HTML
+function getTeamForm(id = null) {
+    return `
+        <form id="itemForm">
+            <div class="form-group">
+                <label for="photo">Photo URL</label>
+                <input type="url" id="photo" name="photo" placeholder="https://example.com/photo.jpg">
+            </div>
+            <div class="form-group">
+                <label for="nama">Name *</label>
+                <input type="text" id="nama" name="nama" required>
+            </div>
+            <div class="form-group">
+                <label for="jabatan">Position</label>
+                <input type="text" id="jabatan" name="jabatan" placeholder="UI/UX Designer">
+            </div>
+            <div class="form-group">
+                <label for="moto">Motto</label>
+                <textarea id="moto" name="moto" placeholder="Design with empathy"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label for="instagram">Instagram</label>
+                <input type="text" id="instagram" name="instagram" placeholder="@username">
+            </div>
+            <div class="form-group">
+                <label for="twitter">Twitter</label>
+                <input type="text" id="twitter" name="twitter" placeholder="@username">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn">${id ? 'Update' : 'Save'}</button>
+            </div>
+        </form>
+    `;
+}
+
+// Get testimoni form HTML
+function getTestimoniForm(id = null) {
+    return `
+        <form id="itemForm">
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="old">Age</label>
+                <input type="number" id="old" name="old" min="0" placeholder="25">
+            </div>
+            <div class="form-group">
+                <label for="image">Photo URL</label>
+                <input type="url" id="image" name="image" placeholder="https://example.com/photo.jpg">
+            </div>
+            <div class="form-group">
+                <label for="text_testi">Testimonial *</label>
+                <textarea id="text_testi" name="text_testi" required placeholder="Write testimonial here..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn">${id ? 'Update' : 'Save'}</button>
+            </div>
+        </form>
+    `;
+}
+
+// Get notes form HTML
+function getNotesForm(id = null) {
+    return `
+        <form id="itemForm">
+            <div class="form-group">
+                <label for="title">Title *</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Content *</label>
+                <textarea id="content" name="content" required placeholder="Write article content here..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="is_published" name="is_published"> Published
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn">${id ? 'Update' : 'Save'}</button>
+            </div>
+        </form>
+    `;
+}
+
+// Save item
+async function saveItem(type, id = null) {
+    const form = document.getElementById('itemForm');
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // Convert checkbox to boolean
+    if (data.is_published !== undefined) {
+        data.is_published = formData.has('is_published');
+    }
+
+    try {
+        if (id) {
+            // Update existing item
+            const { error } = await supabase
+                .from(type)
+                .update(data)
+                .eq('id', id);
+            
+            if (error) throw error;
+        } else {
+            // Create new item
+            const { error } = await supabase
+                .from(type)
+                .insert(data);
+            
+            if (error) throw error;
+        }
+
+        closeModal();
+        await loadSection(currentSection);
+    } catch (error) {
+        alert('Error saving item: ' + error.message);
+    }
+}
+
+// Edit item
+async function editItem(type, id) {
+    try {
+        const { data, error } = await supabase
+            .from(type)
+            .select('*')
+            .eq('id', id)
+            .single();
+
+        if (error) throw error;
+
+        openModal(type, id);
+
+        // Populate form with existing data
+        setTimeout(() => {
+            Object.keys(data).forEach(key => {
+                const input = document.getElementById(key);
+                if (input) {
+                    if (input.type === 'checkbox') {
+                        input.checked = data[key];
+                    } else {
+                        input.value = data[key] || '';
+                    }
+                }
+            });
+        }, 100);
+    } catch (error) {
+        alert('Error loading item: ' + error.message);
+    }
+}
+
+// Delete item
+async function deleteItem(type, id) {
+    if (!confirm('Are you sure you want to delete this item?')) {
+        return;
+    }
+
+    try {
+        const { error } = await supabase
+            .from(type)
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+
+        await loadSection(currentSection);
+    } catch (error) {
+        alert('Error deleting item: ' + error.message);
+    }
+}
+
+// Utility function
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Make functions globally available
+window.loadSection = loadSection;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.editItem = editItem;
+window.deleteItem = deleteItem;
+
+// Initialize the application
+init();
