@@ -4,6 +4,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const SUPABASE_URL = 'https://bpzeveffsxawqdbojkfu.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwemV2ZWZmc3hhd3FkYm9qa2Z1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0ODkxOTMsImV4cCI6MjA3MzA2NTE5M30.LzL2-yLVxC3Gh6-a-nF5kAEi3vhc-ENMGctpBbuLdhA';
 
+// ===== Storage (Gallery) config =====
+const BUCKET = 'Nande Nihon';
+const FOLDER = 'team nande/'; // perhatikan ada slash di akhir
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Global variables
@@ -17,6 +21,12 @@ const logoutBtn = document.getElementById('logoutBtn');
 const modal = document.getElementById('modal');
 const modalTitle = document.getElementById('modalTitle');
 const modalBody = document.getElementById('modalBody');
+
+// Gallery elements
+const galleryGridEl = document.getElementById('galleryGrid');
+const refreshGalleryBtn = document.getElementById('refreshGalleryBtn');
+
+
 
 // Check authentication and initialize
 async function init() {
@@ -58,6 +68,10 @@ function setupEventListeners() {
             closeModal();
         }
     });
+
+    // Gallery refresh button
+    refreshGalleryBtn?.addEventListener('click', () => loadGallery());
+
 }
 
 // Load section
@@ -94,6 +108,10 @@ async function loadSection(section) {
         case 'notes':
             await loadNotes();
             break;
+        case 'gallery':
+            await loadGallery();
+            break;
+
     }
 }
 
@@ -284,6 +302,51 @@ async function loadTestimoni() {
         testimoniTable.innerHTML = `<div class="error">Error loading testimonials: ${error.message}</div>`;
     }
 }
+
+// ====== Gallery (Storage: Bucket "Nande Nihon" / Folder "team nande/") ======
+async function loadGallery() {
+  if (!galleryGridEl) return;
+  galleryGridEl.innerHTML = '<div class="loading">Loading gallery...</div>';
+
+  // List file dalam folder
+  const { data: files, error } = await supabase
+    .storage
+    .from(BUCKET)
+    .list(FOLDER, { limit: 200, sortBy: { column: 'name', order: 'asc' } });
+
+  if (error) {
+    galleryGridEl.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`;
+    return;
+  }
+
+  if (!files || files.length === 0) {
+    galleryGridEl.innerHTML = '<p>No images found in gallery.</p>';
+    return;
+  }
+
+  // Render grid cards
+  const cards = files
+    .filter(f => !f.name.startsWith('.')) // skip hidden files
+    .map(f => {
+      const { data: urlData } = supabase
+        .storage
+        .from(BUCKET)
+        .getPublicUrl(FOLDER + f.name);
+      const url = urlData?.publicUrl ?? '';
+      return `
+        <div class="card" style="display:inline-block; margin:8px; text-align:center; background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:10px;">
+          <img src="${escapeHtml(url)}" alt="${escapeHtml(f.name)}"
+               style="width:160px; height:160px; object-fit:cover; border-radius:8px;">
+          <div style="margin-top:6px; font-size:13px; color:#374151; max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"
+               title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</div>
+        </div>
+      `;
+    })
+    .join('');
+
+  galleryGridEl.innerHTML = `<div style="display:flex; flex-wrap:wrap; gap:12px;">${cards}</div>`;
+}
+
 
 // Load notes data
 async function loadNotes() {
@@ -551,6 +614,7 @@ async function deleteItem(type, id) {
     }
 }
 
+
 // Utility function
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -564,6 +628,8 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.editItem = editItem;
 window.deleteItem = deleteItem;
+
+
 
 // Initialize the application
 init();
