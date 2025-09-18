@@ -1603,6 +1603,7 @@ body {
   min-width: 260px;
   min-height: 540px;
   max-width: 260px;
+  height: 540px;
 }
 
 .img-container {
@@ -1676,32 +1677,62 @@ body {
 }
 
 /* Responsive Section Team */
+
 @media (max-width: 1024px) {
-  .section-10 {
-    padding: 60px 32px;
-    gap: 40px;
-    font-size: 32px;
+  .team-1 {
+    min-width: 260px;
+    min-height: 540px;
+    max-width: 260px;
+    height: 540px;
   }
 }
 
 @media (max-width: 768px) {
-  .section-10 {
-    padding: 40px 12px;
-    gap: 32px;
-    font-size: 24px;
+  .team-1 {
+    min-width: 160px;
+    max-width: 200px;
+    min-height: 200px;
+    
+    padding: 8px 8px 24px;
   }
-
-  @media (max-width: 480px) {
-    .section-10 {
-      padding: 20px 12px;
-      gap: 24px;
-    }
-    .section-title {
-      font-size: 24px;
-    }
+  .img-container {
+    max-width: 100%;
     
   }
-  
+  .our-team {
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .name-team {
+    font-size: 18px;
+  }
+  .position-team {
+    font-size: 16px;
+  }
+  .moto {
+    font-size: 12px;
+  }
+  .social-media {
+    gap: 8px;
+    height: 24px;
+  }
+  .social-media-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-1 {
+    min-width: 100px;
+    max-width: 100px;
+    height: 360px;
+  }
+  .img-container {
+    width: 140px;
+    height: 140px;
+  }
 }
 
 /* Section Testimoni Marquee */
