@@ -8,6 +8,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: normal;
+  margin: 0px;
 }
 
 /* Typography Scale - 8 sizes from 48pt to 10pt */
@@ -867,7 +868,7 @@ body {
 }
 
 
-/* Responsive */
+/* Responsive Section 2 */
 @media (max-width: 1024px) {
   .section-2 .content {
     grid-template-columns: repeat(2, 1fr);
@@ -894,6 +895,11 @@ body {
 
   .section-2 {
     padding: 48px 0;
+  }
+
+  .section-2 .section-title {
+    font-size: 24px;
+    margin-bottom: 24px;
   }
 }
 
@@ -1592,7 +1598,6 @@ body {
   background-color: #ffffff;
   border: 1px solid var(--neutral-10);
   box-sizing: border-box;
-  height: 540px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1601,9 +1606,10 @@ body {
   padding: 20px 20px 40px;
   gap: 8px;
   min-width: 260px;
-  min-height: 540px;
   max-width: 260px;
-  height: 540px;
+  max-height: 540px;
+  min-height: 540px;
+ 
 }
 
 .img-container {
@@ -1678,44 +1684,57 @@ body {
 
 /* Responsive Section Team */
 
-@media (max-width: 1024px) {
-  .team-1 {
-    min-width: 260px;
-    min-height: 540px;
-    max-width: 260px;
-    height: 540px;
-  }
-}
 
 @media (max-width: 768px) {
+  .section-10 {
+    padding: 60px 32px;
+    gap: 40px;
+  }
   .team-1 {
-    min-width: 160px;
-    max-width: 200px;
-    min-height: 200px;
-    
+    min-width: 180px;
+    max-width: 180px;
     padding: 8px 8px 24px;
+    gap: 8px;
+    min-height: 400px;
+    max-height: 400px;
   }
   .img-container {
-    max-width: 100%;
-    
+    width: 156px;
+    height: 156px;
+    border-radius: 12000px;   /* opsional */
+    overflow: hidden;      /* biar gambar tidak keluar kotak */
+    position: relative;
+    background: #f3f4f6;   /* fallback background */
   }
+  .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* isi penuh, bisa terpotong */
+    object-position: center;
+    display: block;
+  }
+
   .our-team {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
   }
+
   .name-team {
     font-size: 18px;
   }
   .position-team {
     font-size: 16px;
+    line-height: 100%;
   }
   .moto {
     font-size: 12px;
   }
   .social-media {
     gap: 8px;
-    height: 24px;
   }
   .social-media-icon {
     width: 24px;
@@ -1725,13 +1744,13 @@ body {
 
 @media (max-width: 480px) {
   .team-1 {
-    min-width: 100px;
-    max-width: 100px;
-    height: 360px;
+    min-width: 144px;
+    max-width: 144px;
+    padding: 10px 10px 20px;
   }
   .img-container {
-    width: 140px;
-    height: 140px;
+    width: 124px;
+    height: 124px;
   }
 }
 
