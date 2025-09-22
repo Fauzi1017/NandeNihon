@@ -103,9 +103,6 @@ async function loadSection(section) {
         case 'testimoni':
             await loadTestimoni();
             break;
-        case 'notes':
-            await loadNotes();
-            break;
         case 'gallery':
             await loadGallery();
             break;
@@ -117,15 +114,13 @@ async function loadSection(section) {
 async function loadDashboard() {
     try {
         // Load counts
-        const [teamData, testimoniData, notesData] = await Promise.all([
+        const [teamData, testimoniData] = await Promise.all([
             supabase.from('team').select('id', { count: 'exact' }),
             supabase.from('testimoni').select('id', { count: 'exact' }),
-            supabase.from('notes').select('id', { count: 'exact' }).eq('is_published', true)
         ]);
 
         document.getElementById('teamCount').textContent = teamData.count || 0;
         document.getElementById('testimoniCount').textContent = testimoniData.count || 0;
-        document.getElementById('notesCount').textContent = notesData.count || 0;
 
         // Load recent activity
         await loadRecentActivity();
@@ -346,56 +341,6 @@ async function loadGallery() {
 }
 
 
-// Load notes data
-async function loadNotes() {
-    const notesTable = document.getElementById('notesTable');
-    notesTable.innerHTML = '<div class="loading">Loading articles...</div>';
-
-    try {
-        const { data, error } = await supabase
-            .from('notes')
-            .select('*')
-            .order('created_at', { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            notesTable.innerHTML = '<div class="empty-state">No articles found</div>';
-            return;
-        }
-
-        notesTable.innerHTML = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Published</th>
-                        <th>Created</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${data.map(note => `
-                        <tr>
-                            <td>${escapeHtml(note.title || '')}</td>
-                            <td>${escapeHtml((note.content || '').substring(0, 100))}${(note.content || '').length > 100 ? '...' : ''}</td>
-                            <td>${note.is_published ? 'Yes' : 'No'}</td>
-                            <td>${new Date(note.created_at).toLocaleDateString()}</td>
-                            <td class="actions">
-                                <button class="btn btn-sm btn-secondary" onclick="editItem('notes', ${note.id})">Edit</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteItem('notes', ${note.id})">Delete</button>
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
-    } catch (error) {
-        notesTable.innerHTML = `<div class="error">Error loading articles: ${error.message}</div>`;
-    }
-}
-
 
 // Open modal for adding/editing
 function openModal(type, id = null) {
@@ -408,9 +353,6 @@ function openModal(type, id = null) {
             break;
         case 'testimoni':
             formHTML = getTestimoniForm(id);
-            break;
-        case 'notes':
-            formHTML = getNotesForm(id);
             break;
     }
 
@@ -493,31 +435,6 @@ function getTestimoniForm(id = null) {
             <div class="form-group">
                 <label for="text_testi">Testimonial *</label>
                 <textarea id="text_testi" name="text_testi" required placeholder="Write testimonial here..."></textarea>
-            </div>
-            <div class="modal-actions">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                <button type="submit" class="btn">${id ? 'Update' : 'Save'}</button>
-            </div>
-        </form>
-    `;
-}
-
-// Get notes form HTML
-function getNotesForm(id = null) {
-    return `
-        <form id="itemForm">
-            <div class="form-group">
-                <label for="title">Title *</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="content">Content *</label>
-                <textarea id="content" name="content" required placeholder="Write article content here..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="is_published" name="is_published"> Published
-                </label>
             </div>
             <div class="modal-actions">
                 <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
