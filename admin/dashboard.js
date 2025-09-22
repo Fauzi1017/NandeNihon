@@ -26,8 +26,6 @@ const modalBody = document.getElementById('modalBody');
 const galleryGridEl = document.getElementById('galleryGrid');
 const refreshGalleryBtn = document.getElementById('refreshGalleryBtn');
 
-
-
 // Check authentication and initialize
 async function init() {
     const { data: { session } } = await supabase.auth.getSession();
@@ -38,10 +36,10 @@ async function init() {
 
     currentUser = session.user;
     userEmail.textContent = currentUser.email;
-    
+
     // Load dashboard data
     await loadDashboard();
-    
+
     // Set up event listeners
     setupEventListeners();
 }
@@ -305,35 +303,35 @@ async function loadTestimoni() {
 
 // ====== Gallery (Storage: Bucket "Nande Nihon" / Folder "team nande/") ======
 async function loadGallery() {
-  if (!galleryGridEl) return;
-  galleryGridEl.innerHTML = '<div class="loading">Loading gallery...</div>';
+    if (!galleryGridEl) return;
+    galleryGridEl.innerHTML = '<div class="loading">Loading gallery...</div>';
 
-  // List file dalam folder
-  const { data: files, error } = await supabase
-    .storage
-    .from(BUCKET)
-    .list(FOLDER, { limit: 200, sortBy: { column: 'name', order: 'asc' } });
-
-  if (error) {
-    galleryGridEl.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`;
-    return;
-  }
-
-  if (!files || files.length === 0) {
-    galleryGridEl.innerHTML = '<p>No images found in gallery.</p>';
-    return;
-  }
-
-  // Render grid cards
-  const cards = files
-    .filter(f => !f.name.startsWith('.')) // skip hidden files
-    .map(f => {
-      const { data: urlData } = supabase
+    // List file dalam folder
+    const { data: files, error } = await supabase
         .storage
         .from(BUCKET)
-        .getPublicUrl(FOLDER + f.name);
-      const url = urlData?.publicUrl ?? '';
-      return `
+        .list(FOLDER, { limit: 200, sortBy: { column: 'name', order: 'asc' } });
+
+    if (error) {
+        galleryGridEl.innerHTML = `<p class="error">${escapeHtml(error.message)}</p>`;
+        return;
+    }
+
+    if (!files || files.length === 0) {
+        galleryGridEl.innerHTML = '<p>No images found in gallery.</p>';
+        return;
+    }
+
+    // Render grid cards
+    const cards = files
+        .filter(f => !f.name.startsWith('.')) // skip hidden files
+        .map(f => {
+            const { data: urlData } = supabase
+                .storage
+                .from(BUCKET)
+                .getPublicUrl(FOLDER + f.name);
+            const url = urlData?.publicUrl ?? '';
+            return `
         <div class="card" style="display:inline-block; margin:8px; text-align:center; background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:10px;">
           <img src="${escapeHtml(url)}" alt="${escapeHtml(f.name)}"
                style="width:160px; height:160px; object-fit:cover; border-radius:8px;">
@@ -341,10 +339,10 @@ async function loadGallery() {
                title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</div>
         </div>
       `;
-    })
-    .join('');
+        })
+        .join('');
 
-  galleryGridEl.innerHTML = `<div style="display:flex; flex-wrap:wrap; gap:12px;">${cards}</div>`;
+    galleryGridEl.innerHTML = `<div style="display:flex; flex-wrap:wrap; gap:12px;">${cards}</div>`;
 }
 
 
@@ -398,10 +396,11 @@ async function loadNotes() {
     }
 }
 
+
 // Open modal for adding/editing
 function openModal(type, id = null) {
     modalTitle.textContent = id ? `Edit ${type}` : `Add ${type}`;
-    
+
     let formHTML = '';
     switch (type) {
         case 'team':
@@ -437,40 +436,41 @@ function closeModal() {
 // Get team form HTML
 function getTeamForm(id = null) {
     return `
-        <form id="itemForm">
-            <div class="form-group">
-                <label for="photo">Photo URL</label>
-                <input type="url" id="photo" name="photo" placeholder="https://example.com/photo.jpg">
-            </div>
-            <div class="form-group">
-                <label for="nama">Name *</label>
-                <input type="text" id="nama" name="nama" required>
-            </div>
-            <div class="form-group">
-                <label for="jabatan">Position</label>
-                <input type="text" id="jabatan" name="jabatan" placeholder="UI/UX Designer">
-            </div>
-            <div class="form-group">
-                <label for="moto">Motto</label>
-                <textarea id="moto" name="moto" placeholder="Design with empathy"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="name@example.com">
-            </div>
-            <div class="form-group">
-                <label for="instagram">Instagram</label>
-                <input type="text" id="instagram" name="instagram" placeholder="@username">
-            </div>
-            <div class="form-group">
-                <label for="twitter">Twitter</label>
-                <input type="text" id="twitter" name="twitter" placeholder="@username">
-            </div>
-            <div class="modal-actions">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                <button type="submit" class="btn">${id ? 'Update' : 'Save'}</button>
-            </div>
-        </form>
+            <form id="itemForm">
+        <div class="form-group">
+            <label for="photo">Photo</label>
+            <input type="file" id="photo" name="photo" accept="image/*">
+            <input type="hidden" id="photoUrl" name="photoUrl">
+        </div>
+        <div class="form-group">
+            <label for="nama">Name *</label>
+            <input type="text" id="nama" name="nama" required>
+        </div>
+        <div class="form-group">
+            <label for="jabatan">Position</label>
+            <input type="text" id="jabatan" name="jabatan" placeholder="UI/UX Designer">
+        </div>
+        <div class="form-group">
+            <label for="moto">Motto</label>
+            <textarea id="moto" name="moto" placeholder="Design with empathy"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+            <label for="instagram">Instagram</label>
+            <input type="text" id="instagram" name="instagram" placeholder="@username">
+        </div>
+        <div class="form-group">
+            <label for="twitter">Twitter</label>
+            <input type="text" id="twitter" name="twitter" placeholder="@username">
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn">${id ? 'Update' : 'Save'}</button>
+        </div>
+    </form>
     `;
 }
 
@@ -527,32 +527,93 @@ function getNotesForm(id = null) {
     `;
 }
 
-// Save item
+// NEW FUNCTION: Upload photo to Supabase Storage
+async function uploadPhotoToSupabase(file) {
+    if (!file) return null;
+
+    // Tambahkan timestamp untuk memastikan nama file unik
+    const fileName = `${Date.now()}-${file.name}`;
+    const filePath = `${FOLDER}${fileName}`;
+
+    const { data, error } = await supabase.storage
+        .from(BUCKET)
+        .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: false
+        });
+
+    if (error) {
+        throw error;
+    }
+
+    // Dapatkan URL publik dari file yang diunggah
+    const { data: publicUrlData } = supabase
+        .storage
+        .from(BUCKET)
+        .getPublicUrl(filePath);
+
+    return publicUrlData.publicUrl;
+}
+
+// Perbaikan pada fungsi saveItem
 async function saveItem(type, id = null) {
     const form = document.getElementById('itemForm');
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    // Convert checkbox to boolean
-    if (data.is_published !== undefined) {
-        data.is_published = formData.has('is_published');
+    
+    // Pastikan Anda hanya memproses form 'team' di sini
+    if (type !== 'team') {
+        const data = Object.fromEntries(formData.entries());
+        // Lanjutkan dengan logika untuk testimoni dan notes
+        try {
+            if (id) {
+                const { error } = await supabase.from(type).update(data).eq('id', id);
+                if (error) throw error;
+            } else {
+                const { error } = await supabase.from(type).insert(data);
+                if (error) throw error;
+            }
+            closeModal();
+            await loadSection(currentSection);
+        } catch (error) {
+            alert('Error saving item: ' + error.message);
+        }
+        return;
     }
 
+    // Logika khusus untuk form 'team'
+    const photoFile = formData.get('photo');
+    let photoUrl = formData.get('photoUrl'); // Ambil URL foto yang sudah ada (dari input hidden)
+
     try {
+        // Cek apakah ada file baru yang diunggah
+        if (photoFile && photoFile.size > 0) {
+            photoUrl = await uploadPhotoToSupabase(photoFile);
+        }
+
+        const dataToSave = {
+            nama: formData.get('nama'),
+            jabatan: formData.get('jabatan'),
+            moto: formData.get('moto'),
+            email: formData.get('email'),
+            instagram: formData.get('instagram'),
+            twitter: formData.get('twitter'),
+            photo: photoUrl // Gunakan URL foto yang sudah diunggah atau yang sudah ada
+        };
+
         if (id) {
             // Update existing item
             const { error } = await supabase
                 .from(type)
-                .update(data)
+                .update(dataToSave)
                 .eq('id', id);
-            
+
             if (error) throw error;
         } else {
             // Create new item
             const { error } = await supabase
                 .from(type)
-                .insert(data);
-            
+                .insert(dataToSave);
+
             if (error) throw error;
         }
 
@@ -583,6 +644,9 @@ async function editItem(type, id) {
                 if (input) {
                     if (input.type === 'checkbox') {
                         input.checked = data[key];
+                    } else if (input.type === 'file') {
+                        // Tidak mengisi input file, tetapi mengisi input hidden untuk URL
+                        document.getElementById('photoUrl').value = data[key] || '';
                     } else {
                         input.value = data[key] || '';
                     }
@@ -628,8 +692,6 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.editItem = editItem;
 window.deleteItem = deleteItem;
-
-
 
 // Initialize the application
 init();
