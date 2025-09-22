@@ -139,7 +139,7 @@ body {
   --tertiary-90: #7D546A;
   --tertiary-80: #A6708D;
   --tertiary-70: #CF8CB1;
-  --tertiary-60: #F9A8D4;
+  --tertiary-base: #F9A8D4;
   --tertiary-50: #FAB9DD;
   --tertiary-40: #FBCBE5;
   --tertiary-30: #FDDCEE;
@@ -162,7 +162,8 @@ body {
 /* Button Styles */
 .btn-primary,
 .btn-secondary,
-.btn-tertiary {
+.btn-tertiary,
+.btn-primary-disabled {
   border: 1px solid;
   font-family: 'Noto Sans', sans-serif;
   letter-spacing: normal;
@@ -172,6 +173,12 @@ body {
   border-radius: 6px;
   transition: all 0.3s ease;
 
+}
+
+.btn-primary-disabled {
+  background-color: var(--neutral-20);
+  color: var(--neutral-40);
+  border-color: var(--neutral-40);
 }
 
 .btn-primary {
