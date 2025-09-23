@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .form-container {
+            display: flex;
+            flex-direction: column;
             max-width: 600px;
             margin: 0 auto;
             padding: 40px;
@@ -15,19 +17,30 @@
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             text-align: left;
+            gap: 24px;
+            
         }
         .form-group {
-            margin-bottom: 20px;
+            display:grid;
             font-size: medium;
             width: 600px;
             box-sizing: border-box;
+            gap: 8px;
+            margin-top: 24px;
         }
         .form-group label {
             display: block;
-            margin-bottom: 8px;
             font-weight: 500;
             color: var(--neutral-80);
+            gap: 8px;
         }
+        /* 1) Label judul field saja */
+        .form-group > label {
+        display: block;
+        font-weight: 500;
+        color: var(--neutral-80);
+        }
+        /* 2) Label dengan input/textarea/select */
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -52,17 +65,35 @@
             background-color: var(--neutral-10);
             cursor: not-allowed;
         }
+
+        /* 2) Container radio */
         .radio-group {
-            display: flex;
-            gap: 20px;
-            size: 60px;
-            align-items: center;
+        display: flex;
+        gap: 24px;
+        align-items: center;
         }
+
+        /* 3) Label radio jadi flex item dengan isi center */
+        .radio-group .gender,
+        .radio-group label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        line-height: 1;           /* cegah tinggi ekstra dari font */
+        }
+
+        /* 4) Reset input radio */
+        .radio-group input[type="radio"] {
+        margin: 0;
+        vertical-align: middle;   /* jaga baseline */
+        width: 20px;              /* opsional */
+        height: 20px;             /* opsional */
+        }
+
         .radio-group input {
-            width: 32px;
-            height: 32px;
-            
-            
+            width: 24px;
+            height: 24px;
         }
         .radio-group label {
             display: inline;
@@ -71,10 +102,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 24px;
         }
         .checkbox-group input {
-            width: auto;
+            width: 24px;
+            height: 24px;
             margin: 0;
         }
         .btn-submit {
@@ -102,6 +134,15 @@
 
     </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-S326Z17370"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-S326Z17370');
+</script>
 <body>
 
     <main class="main-content">
@@ -129,13 +170,13 @@
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
                                 <div class="radio-group">
-                                    <label for="male" style="line-height: 32px;">
+                                    <label class="gender" for="male">
                                         <input type="radio" id="male" name="gender" value="Laki-laki" required>
                                         Laki-laki
                                     </label>
-                                    <label for="female">
+                                    <label for="female" class="gender">
                                         <input type="radio" id="female" name="gender" value="Perempuan">
-                                        Perempuan
+                                        <span style="vertical-align: middle;">Perempuan</span>
                                     </label>
                                 </div>
                         </div>
@@ -170,14 +211,44 @@
                             <textarea id="motivation" name="motivation" rows="4" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="source">Tahu Nande Nihon dari Mana?</label>
-                            <input type="text" id="source" name="source" placeholder="Contoh: Instagram, Teman, Google" required>
+                            <label for="source">Tau Nande Nihon dari Mana?</label>
+                            <div id="source-radio-group" style="display:flex;flex-direction:column;gap:8px;">
+                                <label class="source-option" style="display:inline-flex;align-items:center;gap:12px;font-weight:400;">
+                                    <input type="radio" name="source" value="Teman/Keluarga" required
+                                           style="width:20px;height:20px;margin:0;accent-color:var(--primary-base);">
+                                    <span>Teman/Keluarga</span>
+                                </label>
+                                <label class="source-option" style="display:inline-flex;align-items:center;gap:12px;font-weight:400;">
+                                    <input type="radio" name="source" value="Grup belajar"
+                                           style="width:20px;height:20px;margin:0;accent-color:var(--primary-base);">
+                                    <span>Grup belajar</span>
+                                </label>
+                                <label class="source-option" style="display:inline-flex;align-items:center;gap:12px;font-weight:400;">
+                                    <input type="radio" name="source" value="Sosial media"
+                                           style="width:20px;height:20px;margin:0;accent-color:var(--primary-base);">
+                                    <span>Sosial media</span>
+                                </label>
+                                <label class="source-option" style="display:inline-flex;align-items:center;gap:12px;font-weight:400;">
+                                    <input type="radio" name="source" value="Lainnya" id="sourceOtherRadio"
+                                           style="width:20px;height:20px;margin:0;accent-color:var(--primary-base);">
+                                    <span>Lainnya</span>
+                                </label>
+
+                                <input type="text" id="sourceOtherInput" name="sourceOther" placeholder="Sebutkan lainnya..."
+                                       style="display:none; margin-left:36px; margin-top:6px; padding:8px; border:1px solid var(--neutral-20); border-radius:8px; width:calc(100% - 36px); box-sizing:border-box;"/>
+                            </div>
                         </div>
                         <div class="form-group checkbox-group">
                             <input type="checkbox" id="isFollowed" name="isFollowed" required>
-                            <label for="isFollowed">Saya sudah follow akun Instagram @nandenihon</label>
+                            <label for="isFollowed">
+                                Saya sudah follow akun Instagram
+                                <a href="https://instagram.com/nandenihon" target="_blank" style="color: var(--primary-base); font-weight: 600; text-decoration: underline; display: inline-flex; align-items: center; gap: 4px;">
+                                    <!-- Radix Instagram Logo SVG -->
+                                    @nandenihon
+                                </a>
+                            </label>
                         </div>
-                        <div class="form-group checkbox-group">
+                        <div class="form-group checkbox-group" style="margin-bottom: 24px;">
                             <input type="checkbox" id="isWillingToShare" name="isWillingToShare" required>
                             <label for="isWillingToShare">Saya siap berbagi keseruan kelas di media sosial</label>
                         </div>
@@ -200,5 +271,24 @@
     <!-- End Success Modal -->
 
     <script type="module" src="/pendaftaran/form.js"></script>
+    <script>
+    // Show/hide input if "Lainnya" selected
+    document.addEventListener('DOMContentLoaded', function() {
+        const radios = document.querySelectorAll('input[name="source"]');
+        const otherInput = document.getElementById('sourceOtherInput');
+        radios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'Lainnya') {
+                    otherInput.style.display = 'block';
+                    otherInput.required = true;
+                } else {
+                    otherInput.style.display = 'none';
+                    otherInput.required = false;
+                    otherInput.value = '';
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>

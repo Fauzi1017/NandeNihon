@@ -16,20 +16,33 @@ const formMessage = document.getElementById('form-message');
 registrationForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // ambil yang checked (tahan-null)
+    const genderEl = document.querySelector('input[name="gender"]:checked');
+    const sourceEl = document.querySelector('input[name="source"]:checked');
+    const otherRadio = document.getElementById('sourceOtherRadio');   // radio "Lainnya"
+    const otherInput = document.getElementById('sourceOtherInput');   // input teks "Lainnya"
+
+    // nilai source: jika pilih "Lainnya", pakai teks; selain itu pakai value radio terpilih
+    const sourceValue = (otherRadio && otherRadio.checked)
+    ? (otherInput?.value || '').trim()
+    : (sourceEl ? sourceEl.value : '');
+
+
+    // bikin payload
     const formData = {
-        full_name: document.getElementById('fullName').value,
-        nickname: document.getElementById('nickname').value,
-        age: document.getElementById('age').value,
-        gender: document.querySelector('input[name="gender"]:checked').value,
-        domicile: document.getElementById('domicile').value,
-        whatsapp: document.getElementById('whatsapp').value,
-        email: document.getElementById('email').value,
-        instagram: document.getElementById('instagram').value,
-        japanese_skill: document.getElementById('japaneseSkill').value,
-        motivation: document.getElementById('motivation').value,
-        source: document.getElementById('source').value,
-        is_followed: document.getElementById('isFollowed').checked,
-        is_willing_to_share: document.getElementById('isWillingToShare').checked
+    full_name: document.getElementById('fullName').value,
+    nickname: document.getElementById('nickname').value,
+    age: document.getElementById('age').value,
+    gender: genderEl ? genderEl.value : '',                  // aman saat belum dipilih
+    domicile: document.getElementById('domicile').value,
+    whatsapp: document.getElementById('whatsapp').value,
+    email: document.getElementById('email').value,
+    instagram: document.getElementById('instagram').value,
+    japanese_skill: document.getElementById('japaneseSkill').value,
+    motivation: document.getElementById('motivation').value,
+    source: sourceValue,                                      // <- perbaikan di sini
+    is_followed: document.getElementById('isFollowed').checked,
+    is_willing_to_share: document.getElementById('isWillingToShare').checked
     };
 
     // Tampilkan pesan "Loading..."
