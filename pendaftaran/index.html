@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kelas Belajar - Nande Nihon</title>
+    <link rel="stylesheet" href="../asset/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: left;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            font-size: medium;
+            width: 600px;
+            box-sizing: border-box;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--neutral-80);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--neutral-20);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Noto Sans', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-base);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            box-sizing: border-box;
+        }
+        .form-group input:disabled {
+            background-color: var(--neutral-10);
+            cursor: not-allowed;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            size: 60px;
+            align-items: center;
+        }
+        .radio-group input {
+            width: 32px;
+            height: 32px;
+            
+            
+        }
+        .radio-group label {
+            display: inline;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .checkbox-group input {
+            width: auto;
+            margin: 0;
+        }
+        .btn-submit {
+            width: 100%;
+            font-size: 18px;
+            padding: 14px 24px;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .alert-success {
+            background-color: var(--primary-20);
+            color: var(--primary-100);
+            border: 1px solid var(--primary-30);
+        }
+        .alert-danger {
+            background-color: var(--tertiary-20);
+            color: var(--tertiary-100);
+            border: 1px solid var(--tertiary-30);
+        }
+
+    </style>
+</head>
+<body>
+
+    <main class="main-content">
+        <section class="section-4">
+            <div class="container">
+                <div class="title" style="text-align: center; gap: 24px;" width="100%" high="auto">
+                    <h2 class="section-title">Form Pendaftaran Kelas Belajar</h2>
+                
+                <div class="form-container">
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label for="fullName">Nama Lengkap</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nickname">Nama Panggilan</label>
+                            <input type="text" id="nickname" name="nickname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Usia</label>
+                            <input type="number" id="age" name="age" required min="10">
+                        </div>
+                        <div class="form-group">
+                            <label>Jenis Kelamin</label>
+                                <div class="radio-group">
+                                    <label for="male" style="line-height: 32px;">
+                                        <input type="radio" id="male" name="gender" value="Laki-laki" required>
+                                        Laki-laki
+                                    </label>
+                                    <label for="female">
+                                        <input type="radio" id="female" name="gender" value="Perempuan">
+                                        Perempuan
+                                    </label>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="domicile">Domisili</label>
+                            <input type="text" id="domicile" name="domicile" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsapp">Nomor WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="instagram">Akun Instagram</label>
+                            <input type="text" id="instagram" name="instagram">
+                        </div>
+                        <div class="form-group">
+                            <label for="japaneseSkill">Kemampuan Bahasa Jepang</label>
+                            <select id="japaneseSkill" name="japaneseSkill" required>
+                                <option value="">-- Pilih Level --</option>
+                                <option value="Pemula (Hiragana/Katakana)">Pemula (Hiragana/Katakana)</option>
+                                <option value="N5">N5</option>
+                                <option value="N4">N4</option>
+                                <option value="N3 ke atas">N3 ke atas</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="motivation">Motivasi Bergabung</label>
+                            <textarea id="motivation" name="motivation" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="source">Tahu Nande Nihon dari Mana?</label>
+                            <input type="text" id="source" name="source" placeholder="Contoh: Instagram, Teman, Google" required>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="isFollowed" name="isFollowed" required>
+                            <label for="isFollowed">Saya sudah follow akun Instagram @nandenihon</label>
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="isWillingToShare" name="isWillingToShare" required>
+                            <label for="isWillingToShare">Saya siap berbagi keseruan kelas di media sosial</label>
+                        </div>
+                        <div id="form-message" class="alert" style="display:none;"></div>
+                        <button type="submit" class="btn-primary btn-submit">Daftar Sekarang</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.3); z-index:9999; align-items:center; justify-content:center;">
+      <div style="background:#fff; padding:32px 24px; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,0.12); text-align:center; max-width:320px;">
+        <i class="fas fa-check-circle" style="font-size:48px; color:#22c55e;"></i>
+        <h3 style="margin:18px 0 8px 0;">Pendaftaran Berhasil!</h3>
+        <p>Terima kasih sudah mendaftar.<br>Anda akan diarahkan ke halaman utama...</p>
+      </div>
+    </div>
+    <!-- End Success Modal -->
+
+    <script type="module" src="/pendaftaran/form.js"></script>
+</body>
+</html>
