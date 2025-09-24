@@ -18,10 +18,9 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             text-align: left;
             gap: 24px;
-            
         }
         .form-group {
-            display:grid;
+            display: grid;
             font-size: medium;
             width: 600px;
             box-sizing: border-box;
@@ -34,13 +33,11 @@
             color: var(--neutral-80);
             gap: 8px;
         }
-        /* 1) Label judul field saja */
         .form-group > label {
-        display: block;
-        font-weight: 500;
-        color: var(--neutral-80);
+            display: block;
+            font-weight: 500;
+            color: var(--neutral-80);
         }
-        /* 2) Label dengan input/textarea/select */
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -65,38 +62,24 @@
             background-color: var(--neutral-10);
             cursor: not-allowed;
         }
-
-        /* 2) Container radio */
         .radio-group {
-        display: flex;
-        gap: 24px;
-        align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
         }
-
-        /* 3) Label radio jadi flex item dengan isi center */
-        .radio-group .gender,
-        .radio-group label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        line-height: 1;           /* cegah tinggi ekstra dari font */
+        .radio-group .source-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 400;
+            cursor: pointer;
         }
-
-        /* 4) Reset input radio */
         .radio-group input[type="radio"] {
-        margin: 0;
-        vertical-align: middle;   /* jaga baseline */
-        width: 20px;              /* opsional */
-        height: 20px;             /* opsional */
-        }
-
-        .radio-group input {
-            width: 24px;
-            height: 24px;
-        }
-        .radio-group label {
-            display: inline;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-base);
+            margin: 0;
         }
         .checkbox-group {
             display: flex;
@@ -104,9 +87,10 @@
             gap: 10px;
             margin-top: 24px;
         }
-        .checkbox-group input {
-            width: 24px;
-            height: 24px;
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-base);
             margin: 0;
         }
         .btn-submit {
@@ -131,7 +115,49 @@
             color: var(--tertiary-100);
             border: 1px solid var(--tertiary-30);
         }
-
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .form-container {
+                max-width: 95vw;
+                padding: 24px;
+            }
+            .form-group {
+                width: 100%;
+            }
+        }
+        @media (max-width: 700px) {
+            .form-container {
+                padding: 14px;
+                border-radius: 8px;
+            }
+            .form-group {
+                width: 100%;
+                font-size: 15px;
+                margin-top: 16px;
+            }
+            .btn-submit {
+                font-size: 16px;
+                padding: 12px 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 8px;
+                border-radius: 6px;
+            }
+            .form-group {
+                font-size: 14px;
+                margin-top: 12px;
+            }
+            .btn-submit {
+                font-size: 15px;
+                padding: 10px 6px;
+            }
+            .checkbox-group label,
+            .radio-group label {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -170,13 +196,15 @@
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
                                 <div class="radio-group">
-                                    <label class="gender" for="male">
-                                        <input type="radio" id="male" name="gender" value="Laki-laki" required>
-                                        Laki-laki
-                                    </label>
-                                    <label for="female" class="gender">
-                                        <input type="radio" id="female" name="gender" value="Perempuan">
-                                        <span style="vertical-align: middle;">Perempuan</span>
+                                    <label class="source-option" style="display:inline-flex;align-items:center;gap:12px;font-weight:400;">
+                                    <input type="radio" id="male" name="gender" value="Laki-Laki" required
+                                           style="width:20px;height:20px;margin:0;accent-color:var(--primary-base);">
+                                    <span>Laki-Laki</span>
+                                </label>
+                                    <label class="source-option" style="display:inline-flex;align-items:center;gap:12px;font-weight:400;">
+                                    <input type="radio" id="female" name="gender" value="Perempuan" required
+                                           style="width:20px;height:20px;margin:0;accent-color:var(--primary-base);">
+                                    <span>Perempuan</span>
                                     </label>
                                 </div>
                         </div>
