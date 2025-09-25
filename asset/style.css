@@ -2188,3 +2188,158 @@ body {
     font-size: 12px;
   }
 }
+
+
+/* Pendaftaran kelas */
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: left;
+            gap: 24px;
+        }
+        .form-group {
+            display: grid;
+            font-size: medium;
+            width: 600px;
+            box-sizing: border-box;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: var(--neutral-80);
+            gap: 8px;
+        }
+        .form-group > label {
+            display: block;
+            font-weight: 500;
+            color: var(--neutral-80);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--neutral-20);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Noto Sans', sans-serif;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-base);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            box-sizing: border-box;
+        }
+        .form-group input:disabled {
+            background-color: var(--neutral-10);
+            cursor: not-allowed;
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .radio-group .source-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+        .radio-group input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-base);
+            margin: 0;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 24px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-base);
+            margin: 0;
+        }
+        .btn-submit {
+            width: 100%;
+            font-size: 18px;
+            padding: 14px 24px;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .alert-success {
+            background-color: var(--primary-20);
+            color: var(--primary-100);
+            border: 1px solid var(--primary-30);
+        }
+        .alert-danger {
+            background-color: var(--tertiary-20);
+            color: var(--tertiary-100);
+            border: 1px solid var(--tertiary-30);
+        }
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .form-container {
+                max-width: 95vw;
+                padding: 24px;
+            }
+            .form-group {
+                width: 100%;
+            }
+        }
+        @media (max-width: 700px) {
+            .form-container {
+                padding: 14px;
+                border-radius: 8px;
+            }
+            .form-group {
+                width: 100%;
+                font-size: 15px;
+                margin-top: 16px;
+            }
+            .btn-submit {
+                font-size: 16px;
+                padding: 12px 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 8px;
+                border-radius: 6px;
+            }
+            .form-group {
+                font-size: 14px;
+                margin-top: 12px;
+            }
+            .btn-submit {
+                font-size: 15px;
+                padding: 10px 6px;
+            }
+            .checkbox-group label,
+            .radio-group label {
+                font-size: 14px;
+            }
+        }

@@ -5,160 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Kelas Belajar - Nande Nihon N4</title>
     <link rel="stylesheet" href="../asset/style.css">
+    <link rel="icon" type="image/png" href="../asset/img/Favicon.PNG">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            text-align: left;
-            gap: 24px;
-        }
-        .form-group {
-            display: grid;
-            font-size: medium;
-            width: 600px;
-            box-sizing: border-box;
-            gap: 8px;
-            margin-top: 24px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            color: var(--neutral-80);
-            gap: 8px;
-        }
-        .form-group > label {
-            display: block;
-            font-weight: 500;
-            color: var(--neutral-80);
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--neutral-20);
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: 'Noto Sans', sans-serif;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-sizing: border-box;
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-base);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-            box-sizing: border-box;
-        }
-        .form-group input:disabled {
-            background-color: var(--neutral-10);
-            cursor: not-allowed;
-        }
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: flex-start;
-        }
-        .radio-group .source-option {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 400;
-            cursor: pointer;
-        }
-        .radio-group input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary-base);
-            margin: 0;
-        }
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 24px;
-        }
-        .checkbox-group input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary-base);
-            margin: 0;
-        }
-        .btn-submit {
-            width: 100%;
-            font-size: 18px;
-            padding: 14px 24px;
-        }
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            text-align: center;
-        }
-        .alert-success {
-            background-color: var(--primary-20);
-            color: var(--primary-100);
-            border: 1px solid var(--primary-30);
-        }
-        .alert-danger {
-            background-color: var(--tertiary-20);
-            color: var(--tertiary-100);
-            border: 1px solid var(--tertiary-30);
-        }
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .form-container {
-                max-width: 95vw;
-                padding: 24px;
-            }
-            .form-group {
-                width: 100%;
-            }
-        }
-        @media (max-width: 700px) {
-            .form-container {
-                padding: 14px;
-                border-radius: 8px;
-            }
-            .form-group {
-                width: 100%;
-                font-size: 15px;
-                margin-top: 16px;
-            }
-            .btn-submit {
-                font-size: 16px;
-                padding: 12px 10px;
-            }
-        }
-        @media (max-width: 480px) {
-            .form-container {
-                padding: 8px;
-                border-radius: 6px;
-            }
-            .form-group {
-                font-size: 14px;
-                margin-top: 12px;
-            }
-            .btn-submit {
-                font-size: 15px;
-                padding: 10px 6px;
-            }
-            .checkbox-group label,
-            .radio-group label {
-                font-size: 14px;
-            }
-        }
-    </style>
+    
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-S326Z17370"></script>
@@ -170,6 +19,161 @@
   gtag('config', 'G-S326Z17370');
 </script>
 <body>
+    <!-- Header Navigation -->
+    <header class="header" id="mainHeader">
+        <nav class="nav">
+            <div class="nav-container">
+                <!-- Logo/Brand -->
+                <div class="nav-brand">
+                    <a href="#" class="brand-link" id="toTopBtn" title="Kembali ke atas">
+                        <img src="asset/img/logo.svg" alt="NandeNihon" class="brand-logo" />
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <ul class="nav-menu" id="mainNavMenu">
+                    <li class="nav-item">
+                        <a href="www.nandenihon.com" class="nav-link active" data-nav="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#Tentang" class="nav-link" data-nav="tentang">Tentang</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#kelas" class="nav-link" data-nav="kelas">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.nandenihon.com/blog" target="_blank" class="nav-link">Artikel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#kontak" class="nav-link" data-nav="kontak">Kontak</a>
+                    </li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle mobile menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+                <script>
+                    // Make nav-link active while menu clicked/selected
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const navMenu = document.getElementById('mainNavMenu');
+                        const navLinks = navMenu.querySelectorAll('.nav-link');
+
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function (e) {
+                                // For external links, don't change active state
+                                if (link.target === '_blank' || link.href.startsWith('http')) {
+                                    return;
+                                }
+                                navLinks.forEach(l => l.classList.remove('active'));
+                                this.classList.add('active');
+                            });
+                        });
+
+                        // Optional: Set active based on scroll position (for in-page anchors)
+                        window.addEventListener('scroll', function () {
+                            const sections = [
+                                { id: 'Tentang', nav: 'tentang' },
+                                { id: 'kelas', nav: 'kelas' },
+                                { id: 'kontak', nav: 'kontak' }
+                            ];
+                            let found = false;
+                            for (let i = 0; i < sections.length; i++) {
+                                const section = document.getElementById(sections[i].id);
+                                if (section) {
+                                    const rect = section.getBoundingClientRect();
+                                    if (rect.top <= 80 && rect.bottom > 80) {
+                                        navLinks.forEach(l => l.classList.remove('active'));
+                                        const activeLink = navMenu.querySelector('.nav-link[data-nav="' + sections[i].nav + '"]');
+                                        if (activeLink) activeLink.classList.add('active');
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            // If no section found, set Home as active
+                            if (!found) {
+                                navLinks.forEach(l => l.classList.remove('active'));
+                                const homeLink = navMenu.querySelector('.nav-link[data-nav="home"]');
+                                if (homeLink) homeLink.classList.add('active');
+                            }
+                        });
+                    });
+                </script>
+
+                <!-- Mobile Menu Toggle Script -->
+                <script>
+                    // Mobile menu toggle functionality
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                        const navMenu = document.getElementById('mainNavMenu');
+                        const header = document.getElementById('mainHeader');
+
+                        mobileMenuBtn.addEventListener('click', function () {
+                            navMenu.classList.toggle('mobile-menu-open');
+                            mobileMenuBtn.classList.toggle('mobile-menu-active');
+                            header.classList.toggle('mobile-menu-open');
+                        });
+
+                        // Close mobile menu when clicking on a link
+                        const navLinks = navMenu.querySelectorAll('.nav-link');
+                        navLinks.forEach(link => {
+                            link.addEventListener('click', function () {
+                                navMenu.classList.remove('mobile-menu-open');
+                                mobileMenuBtn.classList.remove('mobile-menu-active');
+                                header.classList.remove('mobile-menu-open');
+                            });
+                        });
+
+                        // Close mobile menu when clicking outside
+                        document.addEventListener('click', function (e) {
+                            if (!header.contains(e.target)) {
+                                navMenu.classList.remove('mobile-menu-open');
+                                mobileMenuBtn.classList.remove('mobile-menu-active');
+                                header.classList.remove('mobile-menu-open');
+                            }
+                        });
+                    });
+                </script>
+
+                <!-- Contact Button -->
+                <div class="nav-action">
+                    <button class="btn btn-primary" onclick="window.open('https://wa.me/6281299236462', '_blank')">
+                        <img src="asset/img/icon/wa.svg" alt="WhatsApp" style="height:2em;width:2em;vertical-align:middle;margin-right:8px;filter:brightness(0) invert(1);" />
+                        Hubungi Kami
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <style>
+        .header.scrolled {
+            background-color: #ffffff;
+            transition: background-color 0.3s;
+        }
+    </style>
+    <script>
+        // Fill color on scroll
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to top on logo click
+        document.addEventListener('DOMContentLoaded', function () {
+            const toTopBtn = document.getElementById('toTopBtn');
+            toTopBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
 
     <main class="main-content">
         <section class="section-4">
@@ -297,6 +301,55 @@
       </div>
     </div>
     <!-- End Success Modal -->
+     <!-- Footer Section -->
+    <footer id="kontak" class="footer">
+        <!-- Top Section - Light Blue Background -->
+        <div class="footer-top">
+            <div class="footer-container">
+                <!-- Left Column -->
+                <div class="footer-left">
+                    <div class="footer-brand">
+                        <img alt="Nande Nihon Logo" src="asset/img/logo.svg">
+
+                    </div>
+                    <p class="footer-tagline">Temukan Dunia Jepang Bersama Kami</p>
+                    <nav class="footer-nav">
+                        <a href="#" class="footer-nav-link">Home</a>
+                        <a href="#" class="footer-nav-link">Tentang</a>
+                        <a href="#" class="footer-nav-link">Kelas</a>
+                        <a href="#" class="footer-nav-link">Artikel</a>
+                        <a href="#" class="footer-nav-link">Kontak</a>
+                    </nav>
+                </div>
+
+                <!-- Right Column -->
+                <div class="footer-right">
+                    <h4 class="footer-contact-title">Kontak Kami</h4>
+                    <div class="footer-contact-info">
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="Email" src="asset/img/icon/mail.svg">
+                            <span class="contact-text">hello@nandenihon.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="WhatsApp" src="asset/img/icon/wa.svg">
+                            <span class="contact-text" onclick="window.open('https://wa.me/6281299236462', '_blank')">+62 812-9923-6462</span>
+                        </div>
+                        <div class="contact-item">
+                            <img class="contact-icon" alt="Instagram" src="asset/img/icon/Social Media.svg">
+                            <span class="contact-text">@nandenihon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Section - Dark Blue Background -->
+        <div class="footer-bottom">
+            <div class="footer-container">
+                <p class="footer-copyright">© 2025 Nande Nihon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script type="module" src="/pendaftaran/n4.js"></script>
     <script>
