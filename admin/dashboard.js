@@ -85,11 +85,18 @@ async function loadSection(section) {
         sec.classList.remove('active');
     });
 
-    // Show current section
-    document.getElementById(`${section}-section`).classList.add('active');
+    // Normalisasi nama section -> huruf kecil + ganti spasi jadi dash
+    const key = section.toLowerCase().replace(/\s+/g, '-');
 
-    // Update page title
-    pageTitle.textContent = section.charAt(0).toUpperCase() + section.slice(1);
+    // Sembunyikan semua lalu tampilkan yang aktif
+    document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+    const target = document.getElementById(`${key}-section`);
+    if (!target) return; // guard agar tak error jika id tak ada
+    target.classList.add('active');
+
+    // Update page title dari teks tombol nav (lebih akurat)
+    const btn = document.querySelector(`.nav-button[data-section="${key}"]`);
+    pageTitle.textContent = btn ? btn.textContent.trim() : 'Dashboard';
 
     // Load section data
     currentSection = section;
@@ -106,7 +113,12 @@ async function loadSection(section) {
         case 'gallery':
             await loadGallery();
             break;
-
+        case 'kelas-n5':
+            await loadRegistrations();        // <<< penting untuk memuat tabel
+            break;
+        case 'kelas-n4':
+            await loadRegistrations_n4();        // <<< penting untuk memuat tabel
+            break;
     }
 }
 
@@ -114,13 +126,17 @@ async function loadSection(section) {
 async function loadDashboard() {
     try {
         // Load counts
-        const [teamData, testimoniData] = await Promise.all([
+        const [teamData, testimoniData, registrations_n4Data, registrationsData] = await Promise.all([
             supabase.from('team').select('id', { count: 'exact' }),
             supabase.from('testimoni').select('id', { count: 'exact' }),
+            supabase.from('registrations_n4').select('id', { count: 'exact' }),
+            supabase.from('registrations').select('id', { count: 'exact' }),
         ]);
 
         document.getElementById('teamCount').textContent = teamData.count || 0;
         document.getElementById('testimoniCount').textContent = testimoniData.count || 0;
+        document.getElementById('registrations_n4Count').textContent = registrations_n4Data.count || 0;
+        document.getElementById('registrationsCount').textContent = registrationsData.count || 0;
 
         // Load recent activity
         await loadRecentActivity();
@@ -147,6 +163,18 @@ async function loadRecentActivity() {
             .order('created_at', { ascending: false })
             .limit(3);
 
+        const { data: registrations_n4Data } = await supabase
+            .from('registrations_n4')
+            .select('nickname, created_at')
+            .order('created_at', { ascending: false })
+            .limit(3);
+
+        const { data: registrationsData } = await supabase
+            .from('registrations')
+            .select('nickname, created_at')
+            .order('created_at', { ascending: false })
+            .limit(3);
+
         const activities = [
             ...(teamData || []).map(item => ({
                 type: 'team',
@@ -157,7 +185,17 @@ async function loadRecentActivity() {
                 type: 'testimoni',
                 text: `New testimonial from ${item.name}`,
                 date: new Date(item.created_at)
-            }))
+            })),
+             ...(registrations_n4Data || []).map(item => ({
+                type: 'registrations_n4',
+                text: `New Registered from ${item.nickname}`,
+                date: new Date(item.created_at)
+            })),
+            ...(registrationsData || []).map(item => ({
+                type: 'registrations',
+                text: `New Registered from ${item.nickname}`,
+                date: new Date(item.created_at)
+            })),
         ].sort((a, b) => b.date - a.date).slice(0, 5);
 
         if (activities.length === 0) {
@@ -472,6 +510,237 @@ async function uploadPhotoToSupabase(file) {
     return publicUrlData.publicUrl;
 }
 
+//download filw excel
+function normalizeRegistrationRow(row) {
+  // Normalisasi nama lengkap
+  const fullName = row.fullName ?? row.full_name ?? row.namaLengkap ?? row.nama_lengkap ?? row.name ?? '';
+
+  // Normalisasi kemampuan Jepang
+  const japaneseSkill =
+    row.japaneseSkill ?? row.japanese_level ?? row.kemampuanJepang ?? row.kemampuan_jepang ?? '';
+
+  // Normalisasi boolean is_followed
+  const rawFollowed = row.is_followed ?? row.isFollowed ?? row.followed ?? row.follow ?? false;
+  const isFollowed = (typeof rawFollowed === 'string')
+    ? ['true','1','t','yes','y'].includes(rawFollowed.toLowerCase())
+    : !!rawFollowed;
+
+  // Field umum lain (silakan sesuaikan dengan tabelmu)
+  const phone = row.phone ?? row.whatsapp ?? row.no_wa ?? '';
+  const email = row.email ?? '';
+  const city  = row.city ?? row.kota ?? '';
+  const createdAt = row.created_at ?? row.createdAt ?? row.inserted_at ?? '';
+  const notes = row.notes ?? row.catatan ?? '';
+
+  return {
+    fullName,
+    japaneseSkill,
+    isFollowed,
+    phone,
+    email,
+    city,
+    createdAt,
+    notes
+  };
+}
+
+// Data Kelas N5 (Registrations)
+async function loadRegistrations() {
+    const tbody = document.getElementById('registrationsTableBody');
+    tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;">Loading...</td></tr>`;
+    let { data, error } = await supabase
+        .from('registrations')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        tbody.innerHTML = `<tr><td colspan="15" style="color:red;text-align:center;">Gagal memuat data</td></tr>`;
+        return;
+    }
+    if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;">Belum ada pendaftar</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = data.map((row, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${row.full_name || ''}</td>
+            <td>${row.nickname || ''}</td>
+            <td>${row.age || ''}</td>
+            <td>${row.gender || ''}</td>
+            <td>${row.domicile || ''}</td>
+            <td>${row.whatsapp || ''}</td>
+            <td>${row.email || ''}</td>
+            <td>${row.instagram || ''}</td>
+            <td>${row.japanese_skill || ''}</td>
+            <td>${row.motivation || ''}</td>
+            <td>${row.sourceOther ? row.sourceOther : row.source || ''}</td>
+            <td>${row.isFollowed ? 'Tidak' : 'Ya'}</td>
+            <td>${row.isWillingToShare ? 'Tidak' : 'Ya'}</td>
+            <td>${row.created_at ? new Date(row.created_at).toLocaleString('id-ID') : ''}</td>
+        </tr>
+    `).join('');
+    // Simpan data terakhir untuk kebutuhan export
+    window.__lastRegistrations = Array.isArray(data) ? data : [];
+
+}
+
+// Export function csv
+function exportRegistrationsToCSV(filename = `registrations-${new Date().toISOString().slice(0,10)}.csv`) {
+  const rows = (window.__lastRegistrations || []).map(normalizeRegistrationRow);
+
+  // Header kolom (silakan urutkan sesuai yang kamu tampilkan di tabel)
+  const headers = [
+    'Nama Lengkap',
+    'Kemampuan Jepang',
+    'Diikuti?',
+    'No. WA/Telepon',
+    'Email',
+    'Kota',
+    'Tanggal Daftar',
+    'Catatan'
+  ];
+
+  const records = rows.map(r => [
+    r.fullName,
+    r.japaneseSkill,
+    r.isFollowed ? 'Ya' : 'Tidak',
+    r.phone,
+    r.email,
+    r.city,
+    r.createdAt,
+    r.notes
+  ]);
+
+  // Escape CSV (quote " dan bungkus jika perlu)
+  const escape = (val) => {
+    const s = (val ?? '').toString();
+    if (/[",\n]/.test(s)) {
+      return `"${s.replace(/"/g, '""')}"`;
+    }
+    return s;
+  };
+
+  const csv = [headers, ...records].map(row => row.map(escape).join(',')).join('\n');
+
+  // Tambah BOM supaya Excel Windows mengenali UTF-8
+  const blob = new Blob(['\ufeff', csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+//export xlsx
+function exportRegistrationsToXLSX(filename = `registrations-${new Date().toISOString().slice(0,10)}.xlsx`) {
+  if (typeof XLSX === 'undefined' || !XLSX || !XLSX.utils) {
+    alert('Fitur Excel membutuhkan SheetJS. Pastikan script XLSX sudah dimuat.');
+    return;
+  }
+
+  const rows = (window.__lastRegistrations || []).map(normalizeRegistrationRow);
+
+  const dataAoa = [
+    ['Nama Lengkap','Kemampuan Jepang','Diikuti?','No. WA/Telepon','Email','Kota','Tanggal Daftar','Catatan'],
+    ...rows.map(r => [
+      r.fullName,
+      r.japaneseSkill,
+      r.isFollowed ? 'Ya' : 'Tidak',
+      r.phone,
+      r.email,
+      r.city,
+      r.createdAt,
+      r.notes
+    ])
+  ];
+
+  const ws = XLSX.utils.aoa_to_sheet(dataAoa);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Registrations');
+  XLSX.writeFile(wb, filename);
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Load registrations when Kelas N5 section is shown
+    document.querySelectorAll('.nav-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (this.dataset.section === "Kelas N5") {
+                loadRegistrations();
+            }
+        });
+    });
+    // Also load on refresh button
+    const refreshBtn = document.getElementById('refreshRegistrationsBtn');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', loadRegistrations);
+    }
+});
+
+
+// Data Kelas N4 (Registrations)
+async function loadRegistrations_n4() {
+    const tbody = document.getElementById('registrations_n4TableBody');
+    tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;">Loading...</td></tr>`;
+    let { data, error } = await supabase
+        .from('registrations_n4')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        tbody.innerHTML = `<tr><td colspan="15" style="color:red;text-align:center;">Gagal memuat data</td></tr>`;
+        return;
+    }
+    if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="15" style="text-align:center;">Belum ada pendaftar</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = data.map((row, i) => `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${row.full_name || ''}</td>
+            <td>${row.nickname || ''}</td>
+            <td>${row.age || ''}</td>
+            <td>${row.gender || ''}</td>
+            <td>${row.domicile || ''}</td>
+            <td>${row.whatsapp || ''}</td>
+            <td>${row.email || ''}</td>
+            <td>${row.instagram || ''}</td>
+            <td>${row.japanese_skill || ''}</td>
+            <td>${row.motivation || ''}</td>
+            <td>${row.sourceOther ? row.sourceOther : row.source || ''}</td>
+            <td>${row.isFollowed ? 'Tidak' : 'Ya'}</td>
+            <td>${row.isWillingToShare ? 'Tidak' : 'Ya'}</td>
+            <td>${row.created_at ? new Date(row.created_at).toLocaleString('id-ID') : ''}</td>
+        </tr>
+    `).join('');
+    // Simpan data terakhir untuk kebutuhan export
+    window.__lastRegistrations = Array.isArray(data) ? data : [];
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Load registrations when Kelas N5 section is shown
+    document.querySelectorAll('.nav-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (this.dataset.section === "Kelas N4") {
+                loadRegistrations();
+            }
+        });
+    });
+    // Also load on refresh button
+    const refreshBtn = document.getElementById('refreshRegistrationsBtn');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', loadRegistrations);
+    }
+});
+
 // Perbaikan pada fungsi saveItem
 async function saveItem(type, id = null) {
     const form = document.getElementById('itemForm');
@@ -594,6 +863,15 @@ async function deleteItem(type, id) {
         alert('Error deleting item: ' + error.message);
     }
 }
+
+// Export registrations button
+document.addEventListener('DOMContentLoaded', () => {
+  const btnCsv  = document.getElementById('btn-export-csv');
+  const btnXlsx = document.getElementById('btn-export-xlsx');
+
+  if (btnCsv)  btnCsv.addEventListener('click',  () => exportRegistrationsToCSV());
+  if (btnXlsx) btnXlsx.addEventListener('click', () => exportRegistrationsToXLSX());
+});
 
 
 // Utility function
